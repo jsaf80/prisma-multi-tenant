@@ -1,15 +1,17 @@
 {
-  "version": "2.4.2",
+  "version": "2.4.3",
   "private": "true",
   "scripts": {
-    "bootstrap": "npm run _tmp_preinstall && npm i; npm i && npm run link:cli",
+    "bootstrap": "npm run _tmp_preinstall && npm i && npm run link:shared && npm run link:client && npm run link:cli",
     "link:cli": "cd packages/cli && npm uninstall -g prisma-multi-tenant && npm link",
+    "link:client": "cd packages/client && npm uninstall -g @prisma-multi-tenant/client && npm link",
+    "link:shared": "cd packages/shared && npm uninstall -g @prisma-multi-tenant/shared && npm link",
     "check": "node scripts/check.js",
     "publish": "node scripts/publish.js",
     "test": "npm run test:cli && npm run test:client",
     "test:cli": "jest tests/cli/",
     "test:client": "bash tests/playground/test-client.sh",
-    "_tmp_preinstall": "mkdir -p packages/cli/build && touch packages/cli/build/index.js"
+    "_tmp_preinstall": "wsl mkdir -p packages/cli/build && wsl touch packages/cli/build/index.js"
   },
   "devDependencies": {
     "@types/jest": "^26.0.4",

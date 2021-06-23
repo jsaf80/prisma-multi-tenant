@@ -15,7 +15,7 @@ const main = async () => {
     },
   })
 
-  const admin = await prisma.admin.findOne({
+  const admin = await prisma.admin.findUnique({
     where: { id: adminSeeded.id },
   })
 

@@ -80,11 +80,11 @@ class MultiTenant<PrismaClient extends { $disconnect: () => Promise<void> }> {
 
   private isCliAvailable(method: string): boolean {
     try {
-      require('@prisma/cli')
+      require('prisma')
     } catch {
       if (!process.env.PMT_TEST) {
         throw new Error(
-          `@prisma/cli needs to be installed in order to use this MultiTenant.${method}(), but it doesn't seem to be present. Did you forget to install it?`
+          `"prisma" needs to be installed in order to use this MultiTenant.${method}(), but it doesn't seem to be present. Did you forget to install it?`
         )
       }
     }

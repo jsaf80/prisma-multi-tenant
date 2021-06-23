@@ -38,11 +38,7 @@ export default class Management {
       }
     }
 
-    this.client = new PrismaClient({
-      debug: process.env.verbose == 'true',
-      ...this.options,
-    })
-
+    this.client = new PrismaClient()
     return this.client
   }
 
@@ -62,7 +58,7 @@ export default class Management {
   async read(name: string): Promise<Tenant> {
     const client = await this.getClient()
 
-    const tenant = await client.tenant.findOne({ where: { name } })
+    const tenant = await client.tenant.findUnique({ where: { name } })
 
     if (!tenant) {
       throw new PmtError('tenant-does-not-exist', name)
@@ -74,7 +70,7 @@ export default class Management {
   async exists(name: string): Promise<boolean> {
     const client = await this.getClient()
 
-    const tenant = await client.tenant.findOne({ where: { name } })
+    const tenant = await client.tenant.findUnique({ where: { name } })
 
     return !!tenant
   }

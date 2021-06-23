@@ -7,7 +7,7 @@ const commands = {
   list: 'List all tenants',
   new: 'Create a new tenant or management',
   studio: 'Use Studio to access a tenant',
-  migrate: 'Migrate tenants (up, down, save)',
+  migrate: 'Migrate tenants (deploy, resolve, status or reset)',
   delete: 'Delete one tenant',
   generate: 'Generate Prisma Clients for the tenants and management',
   env: 'Set env variables for a specific tenant',

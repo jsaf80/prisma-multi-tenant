@@ -27,13 +27,24 @@ export class Project {
     return {
       toSeed: async (tenant: string, expected: boolean = true, seedFile: string = 'seed.js') => {
         const results = await runShell(
-          `dotenv -e prisma/.env node ${seedFile} ${tenant}`,
+          `npx dotenv -e prisma/.env -- node ${seedFile} ${tenant}`,
           this.path
         ).catch((e) => e)
         if (expected) {
           expect(results).toEqual(expect.stringContaining('Successfully seeded'))
         } else {
           expect(results).not.toEqual(expect.stringContaining('Successfully seeded'))
+        }
+      },
+      toRead: async (tenant: string, expected: boolean = true, readFile: string = 'read.js') => {
+        const results = await runShell(
+          `npx dotenv -e prisma/.env -- node ${readFile} ${tenant}`,
+          this.path
+        ).catch((e) => e)
+        if (expected) {
+          expect(results).toEqual(expect.stringContaining('Successfully read'))
+        } else {
+          expect(results).not.toEqual(expect.stringContaining('Successfully read'))
         }
       },
     }
@@ -46,7 +57,7 @@ export class Project {
         expect(exists).toBe(expected)
       },
       toContain: async (expected: string) => {
-        const content = await runShell(`cat ${path}`, this.path)
+        const content = await runShell(`wsl cat ${path}`, this.path)
         expect(content).toEqual(expect.stringContaining(expected))
       },
     }
@@ -56,9 +67,9 @@ export class Project {
 export const initProject = async (name: string): Promise<Project> => {
   console.log(`Initializing ${name} project...`)
 
-  await runShell(`rm -Rf test-${name} && cp -R example test-${name}`)
+  await runShell(`wsl rm -Rf test-${name} && wsl cp -R example test-${name}`)
 
-  await runShell(`cd test-${name} && npm -s install`)
+  await runShell(`wsl cd test-${name} && npm -s install`)
 
   return new Project({ name, path: 'test-' + name })
 }

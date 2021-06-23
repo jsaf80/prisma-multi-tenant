@@ -12,7 +12,7 @@ import {
 
 import { Command, CommandArguments } from '../types'
 
-const migrateActions = ['up', 'down', 'save']
+const migrateActions = ['deploy', 'resolve', 'status', "reset"]
 
 class Migrate implements Command {
   name = 'migrate'
@@ -25,7 +25,7 @@ class Migrate implements Command {
     {
       name: 'action',
       optional: false,
-      description: 'Migrate "up", "down" or "save" the tenant',
+      description: 'Migrate "deploy", "resolve", "status" or "reset" the tenant. For "resolve" and "reset", there are prisma options. Please see Prisma CLI reference.',
     },
   ]
   options = [
@@ -34,38 +34,14 @@ class Migrate implements Command {
       description: 'Specify path of schema',
     },
   ]
-  description = 'Migrate tenants (up, down, save)'
+  description = 'Migrate tenants (deploy, resolve, status or reset)'
 
   async execute(args: CommandArguments, management: Management) {
     const { name, action, migrateArgs, prismaArgs } = this.parseArgs(args)
 
-    if (action == 'save') {
-      // A. Save on default tenant
-      if (!name) {
-        console.log(`\n  Saving migration with default tenant...\n`)
-
-        await this.migrateSave(management, undefined, args.options.schema, migrateArgs, prismaArgs)
-
-        console.log(chalk`\n✅  {green Successfuly saved the migration}\n`)
-        return
-      }
-
-      // B. Save on management
-      if (name == 'management') {
-        throw new PmtError('cannot-migrate-save-management')
-      }
-
-      // C. Save on specific tenant
-      console.log(`\n  Saving migration with tenant "${name}"...\n`)
-
-      await this.migrateSave(management, name, args.options.schema, migrateArgs, prismaArgs)
-
-      console.log(chalk`\n✅  {green Successfuly saved the migration}\n`)
-      return
-    } else {
-      // D. Migrate up or down on all tenants
-      if (!name) {
-        console.log(`\n  Migrating ${action} all tenants...\n`)
+    // D. Migrate up or down on all tenants
+    if (!name) {
+      console.log(`\n  Migrating ${action} all tenants...\n`)
 
         await this.migrateAllTenants(
           management,
@@ -89,8 +65,8 @@ class Migrate implements Command {
         return
       }
 
-      // F. Migrate up or down a specific tenant
-      console.log(`\n  Migrating "${name}" ${action}...`)
+    // F. Migrate a specific tenant
+    console.log(`\n  Migrating "${name}" ${action}...`)
 
       await this.migrateOneTenant(
         management,
@@ -101,8 +77,7 @@ class Migrate implements Command {
         prismaArgs
       )
 
-      console.log(chalk`\n✅  {green Successfuly migrated ${action} "${name}"}\n`)
-    }
+    console.log(chalk`\n✅  {green Successfuly migrated ${action} "${name}"}\n`)
   }
 
   parseArgs(args: CommandArguments) {
@@ -163,13 +138,17 @@ class Migrate implements Command {
   ) {
     schemaPath = schemaPath || (await getSchemaPath())
     return runDistantPrisma(
-      `migrate ${action} ${migrateArgs} --schema ${schemaPath} ${prismaArgs} --experimental`,
+      `migrate ${action} ${migrateArgs} --schema ${schemaPath} ${prismaArgs}`,
       tenant
     )
   }
 
   migrateManagement(action: string, migrateArgs = '', prismaArgs = '') {
-    return runLocalPrisma(`migrate ${action} ${migrateArgs} ${prismaArgs} --experimental`)
+    return runLocalPrisma(`migrate ${action} ${migrateArgs} ${prismaArgs}`)
+  }
+
+  setupManagement(action: string, prismaArgs = '') {
+    return runLocalPrisma(`db ${action} ${prismaArgs}`)
   }
 
   async migrateSave(
@@ -187,7 +166,7 @@ class Migrate implements Command {
     schemaPath = schemaPath || (await getSchemaPath())
 
     const retCode = await spawnShell(
-      `npx @prisma/cli migrate save ${migrateArgs} --schema ${schemaPath} ${prismaArgs} --experimental`
+      `npx prisma migrate dev ${migrateArgs} --schema ${schemaPath} ${prismaArgs}`
     )
 
     if (retCode === 1) {
@@ -195,9 +174,7 @@ class Migrate implements Command {
         // Bug with npm@7 and npx
         console.log('This is probably a bug with npm. Retrying...')
       }
-      return spawnShell(
-        `prisma migrate save ${migrateArgs} --schema ${schemaPath} ${prismaArgs} --experimental`
-      )
+      return spawnShell(`prisma migrate dev ${migrateArgs} --schema ${schemaPath} ${prismaArgs}`)
     }
 
     return retCode

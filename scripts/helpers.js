@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { exec } = require('child_process')
 
-const packages = ['shared', 'client', 'cli', 'blitz', 'redwood']
+const packages = ['shared', 'client', 'cli']
 
 const docs = [
   'doc-basic-js',
@@ -17,8 +17,6 @@ const cwd = {
   shared: path.join(__dirname, '../packages/shared'),
   client: path.join(__dirname, '../packages/client'),
   cli: path.join(__dirname, '../packages/cli'),
-  blitz: path.join(__dirname, '../packages/blitz'),
-  redwood: path.join(__dirname, '../packages/redwood'),
   'doc-basic-js': path.join(__dirname, '../docs/examples/basic-js'),
   'doc-basic-ts': path.join(__dirname, '../docs/examples/basic-ts'),
   'doc-express': path.join(__dirname, '../docs/examples/express'),

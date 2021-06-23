@@ -16,8 +16,8 @@ describe('dx', () => {
   })
 
   test('env', async () => {
-    const env1 = await project.run('env test1 -- printenv DATABASE_URL')
-    const env2 = await project.run('env test2 -- printenv DATABASE_URL')
+    const env1 = await project.run('env test1 -- echo %DATABASE_URL%')
+    const env2 = await project.run('env test2 -- echo %DATABASE_URL%')
 
     expect(env1).toEqual(expect.stringContaining('file:db1.db'))
     expect(env2).toEqual(expect.stringContaining('file:db2.db'))

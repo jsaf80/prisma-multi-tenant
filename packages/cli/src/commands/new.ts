@@ -60,7 +60,7 @@ class New implements Command {
 
     process.env.MANAGEMENT_URL = translateDatasourceUrl(databaseUrl, path.dirname(schemaPath))
 
-    await migrate.migrateManagement('up', '--create-db')
+    await migrate.setupManagement('push', '--preview-feature')
 
     console.log(chalk`\n✅  {green Successfuly created a new management database!}\n`)
   }
@@ -73,7 +73,7 @@ class New implements Command {
       throw new PmtError('reserved-tenant-name', 'management')
     }
 
-    await migrate.migrateTenant('up', tenant, args.options.schema, '--create-db')
+    await migrate.migrateTenant('deploy', tenant, args.options.schema)
 
     if (args.options['no-management']) {
       console.log(
