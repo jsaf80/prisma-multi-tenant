@@ -82,7 +82,8 @@ class Init implements Command {
     const command = isUsingYarn ? 'yarn add --ignore-workspace-root-check' : 'npm install'
     const devOption = isUsingYarn ? '--dev' : '-D'
 
-    await runShell(`${command} @prisma-multi-tenant/client@${packageJson.version}`)
+    // await runShell(`${command} @prisma-multi-tenant/client@${packageJson.version}`)
+    await runShell(`${command} ../../../packages/client`)
 
     if (!(await isPrismaCliLocallyInstalled())) {
       console.log('\n  Also installing `prisma` as a dev dependency in your app...')
@@ -203,7 +204,7 @@ class Init implements Command {
   setUpManagement() {
     console.log('\n  Setting up management database...')
 
-    return migrate.migrateManagement('up', '--create-db')
+    return migrate.setupManagement('push', '--preview-feature')
   }
 
   async createFirstTenant(firstTenant: Datasource, management: Management) {

@@ -41,16 +41,17 @@ class Delete implements Command {
       return
     }
 
-    await migrate.migrateOneTenant(management, 'down', name, args.options.schema).catch((e) => {
-      if (args.options.force) {
-        console.error(e)
-      } else {
-        throw e
-      }
-    })
+    // Database should not be reset for security reasons
+    // await migrate.migrateOneTenant(management, 'reset', name, args.options.schema).catch((e) => {
+    //   if (args.options.force) {
+    //     console.error(e)
+    //   } else {
+    //     throw e
+    //   }
+    // })
     await management.delete(name)
 
-    console.log(chalk`\n✅  {green Migrated down "${name}" and deleted it from management!}\n`)
+    console.log(chalk`\n✅  {green "${name}" has been deleted it from management!}\n`)
     console.log(chalk`  {yellow {bold Note:} You are still in charge of deleting the database!}\n`)
   }
 }

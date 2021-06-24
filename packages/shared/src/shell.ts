@@ -134,6 +134,12 @@ export const runDistantPrisma = async (
   const prismaCliPath = await getPrismaCliPath()
   const promise = runDistant(`node "${prismaCliPath}" ${cmd}`, tenant)
 
+  console.log ("********* AJUSTAR PROMISE runDistantPrisma *********")
+  console.log ("runDistant: cmd", `node "${prismaCliPath}" ${cmd}`, "| tenant:", tenant)
+  console.log ("promise: ", promise)
+  console.log ("withTimeout: ", withTimeout)
+  console.log ("****************************************************")
+
   if (!withTimeout) {
     return promise
   }
@@ -160,7 +166,8 @@ export const runDistantPrisma = async (
     promise
       .then(() => {
         clearTimeout(timeout)
-        resolve()
+        // TODO: check the correct resolve result
+        resolve(promise)
       })
       .catch((err) => {
         clearTimeout(timeout)

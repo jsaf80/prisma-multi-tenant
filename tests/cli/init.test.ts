@@ -29,7 +29,7 @@ describe('init', () => {
   test('init with schema', async () => {
     const project = await initProject('cli-init-with-schema')
 
-    runShell('wsl mv prisma/schema.prisma prisma/schema2.prisma', project.path)
+    runShell('move prisma\\schema.prisma prisma\\schema2.prisma', project.path)
 
     await project.run('init --url=file:management.db --schema prisma/schema2.prisma')
 

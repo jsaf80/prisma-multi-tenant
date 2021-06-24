@@ -57,7 +57,7 @@ export class Project {
         expect(exists).toBe(expected)
       },
       toContain: async (expected: string) => {
-        const content = await runShell(`wsl cat ${path}`, this.path)
+        const content = await runShell(`type ${path}`, this.path)
         expect(content).toEqual(expect.stringContaining(expected))
       },
     }
@@ -67,9 +67,12 @@ export class Project {
 export const initProject = async (name: string): Promise<Project> => {
   console.log(`Initializing ${name} project...`)
 
-  await runShell(`wsl rm -Rf test-${name} && wsl cp -R example test-${name}`)
-
-  await runShell(`wsl cd test-${name} && npm -s install`)
+  if (await fileExists(`test-${name}`)) {
+    await runShell(`rd /s /q test-${name}`);
+  }
+  await runShell(`xcopy /s /e /q example test-${name}\\`);
+  await runShell(`cd test-${name}`);
+  await runShell(`npm -s install`);
 
   return new Project({ name, path: 'test-' + name })
 }
