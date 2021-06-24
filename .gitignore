@@ -3,4 +3,5 @@ build
 tests/playground/*
 !tests/playground/example
 !tests/playground/test-client.sh
+!tests/playground/test-client.bat
 packages/cli/README.md

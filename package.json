@@ -10,7 +10,7 @@
     "publish": "node scripts/publish.js",
     "test": "npm run test:cli && npm run test:client",
     "test:cli": "jest tests/cli/",
-    "test:client": "bash tests/playground/test-client.sh",
+    "test:client": "tests\\playground\\test-client.bat",
     "_tmp_preinstall": "rd /s /q packages\\cli\\build && mkdir packages\\cli\\build && call >> packages\\cli\\build\\index.js"
   },
   "devDependencies": {
