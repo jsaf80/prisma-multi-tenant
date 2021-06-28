@@ -1,7 +1,7 @@
 import inquirer, { Question } from 'inquirer'
 import chalk from 'chalk'
 
-import { Datasource } from '@prisma-multi-tenant/shared'
+import { Datasource } from '@prisma2-multi-tenant/shared'
 
 import { CommandArguments } from '../types'
 
@@ -51,8 +51,14 @@ const askQuestions = async (
   return (answers as unknown) as Datasource
 }
 
-const managementConf = async (args: CommandArguments): Promise<{ url: string }> => {
+const managementConf = async (args: CommandArguments): Promise<{ provider?:string, url: string }> => {
   return askQuestions([
+    {
+      name: 'provider',
+      message: 'Management database provider:',
+      type: 'input',
+      value: args.options.provider,
+    },
     {
       name: 'url',
       message: 'Management database url:',
@@ -62,7 +68,7 @@ const managementConf = async (args: CommandArguments): Promise<{ url: string }> 
   ])
 }
 
-const tenantConf = async (args: CommandArguments): Promise<Datasource> => {
+const tenantConf = async (args: CommandArguments): Promise<{ name:string, url: string }> => {
   return askQuestions([
     {
       name: 'name',

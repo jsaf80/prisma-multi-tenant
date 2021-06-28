@@ -32,7 +32,7 @@ export default class Management {
         PrismaClient = requireDistant(clientManagementPath).PrismaClient
       } catch {
         console.error(
-          `\nError: Cannot find module '.prisma-multi-tenant/management'.\n\nTry running "prisma-multi-tenant generate"\n`
+          `\nError: Cannot find module '.prisma2-multi-tenant/management'.\n\nTry running "prisma2-multi-tenant generate"\n`
         )
         process.exit(1)
       }
@@ -115,9 +115,15 @@ export default class Management {
   }
 
   private sanitizeTenant(tenant: Tenant): Tenant {
-    return {
+    // return {
+    //   name: tenant.name,
+    //   provider: "",
+    //   url: tenant.url,
+    // }
+    const newTenant: { name: string,  url: string } = {
       name: tenant.name,
       url: tenant.url,
     }
+    return (newTenant as unknown) as Datasource
   }
 }

@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 
 import { CliArguments, Command } from '../types'
-import { clientManagementPath, PmtError } from '@prisma-multi-tenant/shared'
+import { clientManagementPath, PmtError } from '@prisma2-multi-tenant/shared'
 
 export const printError = (error: PmtError, args: CliArguments): void => {
   if (error.message.match(`Cannot find module '${clientManagementPath}'`)) {
@@ -42,10 +42,10 @@ export const printError = (error: PmtError, args: CliArguments): void => {
   }
 }
 
-const messageHelp = 'Run `prisma-multi-tenant --help` to learn how to use this tool'
+const messageHelp = 'Run `prisma2-multi-tenant --help` to learn how to use this tool'
 const messageHelpCommand = (name: string): string =>
-  `Run \`prisma-multi-tenant ${name} --help\` to learn how to use this command`
-const messageList = 'Run `prisma-multi-tenant list` to list all existing tenants'
+  `Run \`prisma2-multi-tenant ${name} --help\` to learn how to use this command`
+const messageList = 'Run `prisma2-multi-tenant list` to list all existing tenants'
 
 const missingCommandOrOption = (): void => {
   console.log(chalk`
@@ -75,7 +75,7 @@ const missingClientManagement = () => {
   console.log(chalk`
   {red No management Client found}
 
-  Run \`prisma-multi-tenant generate\` to fix this error
+  Run \`prisma2-multi-tenant generate\` to fix this error
   `)
 }
 

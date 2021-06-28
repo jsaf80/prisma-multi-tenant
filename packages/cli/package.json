@@ -1,7 +1,7 @@
 {
-  "name": "prisma-multi-tenant",
-  "version": "2.4.3",
-  "description": "Command Line Interface for prisma-multi-tenant",
+  "name": "prisma2-multi-tenant",
+  "version": "2.23.0",
+  "description": "Command Line Interface for prisma2-multi-tenant",
   "author": {
     "name": "Thibaud Courtoison",
     "email": "do.not.press.enter@gmail.com",
@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "bin": {
-    "prisma-multi-tenant": "build/index.js",
+    "prisma2-multi-tenant": "build/index.js",
     "pmt": "build/index.js"
   },
   "files": [
@@ -22,8 +22,8 @@
     "prettier": "prettier \"src/**/*.ts\" --check"
   },
   "dependencies": {
-    "@prisma-multi-tenant/shared": "file:../shared",
-    "prisma": "^2.25.0",
+    "@prisma2-multi-tenant/shared": "^2.23.0",
+    "prisma": "^2.23.0",
     "arg": "^5.0.0",
     "chalk": "^4.1.1",
     "cli-table3": "^0.6.0",

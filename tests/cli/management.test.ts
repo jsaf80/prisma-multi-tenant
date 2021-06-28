@@ -1,7 +1,7 @@
 import { initProject, Project } from './helpers/project'
 
 // If timeout error, increase the number
-jest.setTimeout(300000)
+jest.setTimeout(1000000)
 
 describe('management', () => {
   let project: Project
@@ -9,7 +9,7 @@ describe('management', () => {
   beforeAll(async () => {
     project = await initProject('cli-management')
 
-    await project.run('init --url=file:management.db')
+    await project.run('init --provider=sqlite --url=file:management.db')
   })
 
   test('add tenants with args', async () => {
@@ -71,7 +71,7 @@ describe('management', () => {
   })
 
   test('new management', async () => {
-    await project.run('new management --url=file:management2.db')
+    await project.run('new management --provider=sqlite --url=file:management2.db')
 
     await project.expectFile('prisma/management2.db').toExists()
   })

@@ -14,7 +14,8 @@ import {
   isPrismaCliLocallyInstalled,
   translateDatasourceUrl,
   getSchemaPath,
-} from '@prisma-multi-tenant/shared'
+  getSharedPath,
+} from '@prisma2-multi-tenant/shared'
 
 import { Command, CommandArguments } from '../types'
 import { useYarn } from '../helpers/misc'
@@ -29,6 +30,10 @@ class Init implements Command {
   name = 'init'
   args = []
   options = [
+    {
+      name: 'provider',
+      description: 'Provider of the management database',
+    },
     {
       name: 'url',
       description: 'URL of the management database',
@@ -46,14 +51,14 @@ class Init implements Command {
   description = 'Init multi-tenancy for your application'
 
   async execute(args: CommandArguments, management: Management) {
-    // 1. Install prisma-multi-tenant to the application
+    // 1. Install prisma2-multi-tenant to the application
     await this.installPMT()
 
     // 2. Prompt management url
-    const managementUrl = await this.getManagementDatasource(args)
+    const managementDatasource = await this.getManagementDatasource(args)
 
     // 3. Update .env file
-    const firstTenant = await this.updateEnvAndSchemaFiles(managementUrl, args.options.schema)
+    const firstTenant = await this.updateEnvAndSchemaFiles(managementDatasource, args.options.schema)
 
     // 4. Generate clients
     await this.generateClients(args.options.schema)
@@ -72,18 +77,18 @@ class Init implements Command {
     }
 
     console.log(chalk`\n✅  {green Your app is now ready for multi-tenancy!}\n`)
-    console.log(chalk`  {bold Next step:} Create a new tenant with \`prisma-multi-tenant new\`\n`)
+    console.log(chalk`  {bold Next step:} Create a new tenant with \`prisma2-multi-tenant new\`\n`)
   }
 
   async installPMT() {
-    console.log('\n  Installing `@prisma-multi-tenant/client` as a dependency in your app...')
+    console.log('\n  Installing `@prisma2-multi-tenant/client` as a dependency in your app...')
 
     const isUsingYarn = await useYarn()
     const command = isUsingYarn ? 'yarn add --ignore-workspace-root-check' : 'npm install'
     const devOption = isUsingYarn ? '--dev' : '-D'
 
-    // await runShell(`${command} @prisma-multi-tenant/client@${packageJson.version}`)
-    await runShell(`${command} ../../../packages/client`)
+    await runShell(`${command} @prisma2-multi-tenant/client@${packageJson.version}`)
+    // await runShell(`${command} ../../../packages/client`)
 
     if (!(await isPrismaCliLocallyInstalled())) {
       console.log('\n  Also installing `prisma` as a dev dependency in your app...')
@@ -95,19 +100,20 @@ class Init implements Command {
   async getManagementDatasource(args: CommandArguments) {
     console.log(chalk`\n  {yellow We will now configure the management database:}\n`)
 
-    let { url: managementUrl } = await prompt.managementConf(args)
+    let { url: managementUrl, provider: managementProvider } = await prompt.managementConf(args)
 
     const schemaPath = args.options.schema || (await getSchemaPath())
 
     managementUrl = translateDatasourceUrl(managementUrl, path.dirname(schemaPath))
 
+    process.env.MANAGEMENT_PROVIDER = managementProvider
     process.env.MANAGEMENT_URL = managementUrl
 
-    return managementUrl
+    return { url: managementUrl, provider: managementProvider }
   }
 
   async updateEnvAndSchemaFiles(
-    managementUrl: string,
+    managementDatasouce: {url: string, provider?: string},
     schemaPath?: string
   ): Promise<Datasource | null> {
     console.log('\n  Updating .env and schema.prisma files...')
@@ -173,9 +179,10 @@ class Init implements Command {
 
     envFile += `
 
-      # The following env variable is used by prisma-multi-tenant
+      # The following env variable is used by prisma2-multi-tenant
       
-      MANAGEMENT_URL=${managementUrl}
+      MANAGEMENT_PROVIDER=${managementDatasouce.provider}
+      MANAGEMENT_URL=${managementDatasouce.url}
     `
       .split('\n')
       .map((x) => x.substr(6))
@@ -194,10 +201,59 @@ class Init implements Command {
     }
   }
 
+  async updateManagementSchemaFile() {
+    console.log('\n  Updating management schema.prisma file...')
+
+    const sharedPath = await getSharedPath()
+    if (sharedPath == undefined)
+      throw new Error('@prisma2-multi-tenant/shared not found')
+    const schemaPath = path.join(sharedPath, 'prisma/schema.prisma')
+
+    let managementProvider = process.env["MANAGEMENT_PROVIDER"] || undefined
+    if (managementProvider == undefined)
+      throw new Error('.env MANAGEMENT_PROVIDER not found')
+
+    if (((managementProvider.startsWith('"') && managementProvider.endsWith('"'))) ||
+        ((managementProvider.startsWith("'") && managementProvider.endsWith("'")))) {
+      managementProvider = managementProvider.slice(1, -1)
+    }
+    
+    // Read/write schema file and try to get first tenant's url
+    try {
+      let schemaFile = await readSchemaFile(schemaPath)
+
+      const datasourceConfig = schemaFile.match(/datasource\s*\w*\s*\{\s([^}]*)\}/)?.[1]
+      if (!datasourceConfig) {
+        throw new Error('No config found in schema.prisma')
+      }
+
+      const datasourceConfigProvider = datasourceConfig
+        .split('\n')
+        .map((l) =>
+          l
+            .trim()
+            .split('=')
+            .map((l) => l.trim())
+        )
+        .find(([key]) => key === 'provider')?.[1]
+      if (!datasourceConfigProvider) {
+        throw new Error('No provider found in datasource')
+      }
+
+      schemaFile = schemaFile.replace(datasourceConfigProvider, JSON.stringify(managementProvider))
+      await writeSchemaFile(schemaFile, schemaPath)
+    } catch {}
+
+    return true
+  }
+
   async generateClients(schemaPath?: string) {
     console.log('\n  Generating prisma clients for both management and tenants...')
 
     await generate.generateTenants(schemaPath)
+
+    await this.updateManagementSchemaFile()
+
     await generate.generateManagement()
   }
 
@@ -225,7 +281,7 @@ class Init implements Command {
 
     const script = `
       // const { PrismaClient } = require('@prisma/client') // Uncomment for TypeScript support
-      const { MultiTenant } = require('@prisma-multi-tenant/client')
+      const { MultiTenant } = require('@prisma2-multi-tenant/client')
 
       // This is the name of your first tenant, try with another one
       const name = "${firstTenant?.name || 'dev'}"
@@ -234,7 +290,7 @@ class Init implements Command {
       const multiTenant = new MultiTenant()
       
       async function main() {
-        // Prisma-multi-tenant will connect to the correct tenant
+        // prisma2-multi-tenant will connect to the correct tenant
         const prisma = await multiTenant.get(name)
       
         // You keep the same interface as before

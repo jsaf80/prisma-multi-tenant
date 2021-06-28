@@ -5,7 +5,7 @@ import {
   runLocalPrisma,
   spawnShell,
   getSchemaPath,
-} from '@prisma-multi-tenant/shared'
+} from '@prisma2-multi-tenant/shared'
 
 import { Command, CommandArguments } from '../types'
 

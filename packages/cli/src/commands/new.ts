@@ -6,7 +6,7 @@ import {
   PmtError,
   getSchemaPath,
   translateDatasourceUrl,
-} from '@prisma-multi-tenant/shared'
+} from '@prisma2-multi-tenant/shared'
 
 import { Command, CommandArguments } from '../types'
 import prompt from '../helpers/prompt'
@@ -27,6 +27,10 @@ class New implements Command {
     {
       name: 'name',
       description: 'Name of the tenant',
+    },
+    {
+      name: 'provider',
+      description: 'Provider of the management database. Required for new management. Not used for new Tenant',
     },
     {
       name: 'url',
@@ -54,10 +58,11 @@ class New implements Command {
 
   async newManagement(args: CommandArguments) {
     console.log()
-    const { url: databaseUrl } = await prompt.managementConf(args)
+    const { url: databaseUrl, provider: databaseProvider } = await prompt.managementConf(args)
 
     const schemaPath = args.options.schema || (await getSchemaPath())
 
+    process.env.MANAGEMENT_PROVIDER = databaseProvider
     process.env.MANAGEMENT_URL = translateDatasourceUrl(databaseUrl, path.dirname(schemaPath))
 
     await migrate.setupManagement('push', '--preview-feature')

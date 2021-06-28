@@ -1,4 +1,4 @@
-import { Management, spawnShell } from '@prisma-multi-tenant/shared'
+import { Management, spawnShell } from '@prisma2-multi-tenant/shared'
 
 import { Command, CommandArguments } from '../types'
 

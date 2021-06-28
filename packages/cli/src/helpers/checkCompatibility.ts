@@ -36,7 +36,7 @@ export default async (): Promise<void> => {
     if (compareVersions(prismaVersion, prismaVersionRequired) == -1) {
       console[process.env.PMT_TEST ? 'log' : 'warn'](
         chalk.yellow(
-          `Warning: This version of prisma-multi-tenant is compatible with prisma@${prismaVersionRequired}, but you have prisma@${prismaVersion} installed. This may break in unexpected ways.`
+          `Warning: This version of prisma2-multi-tenant is compatible with prisma@${prismaVersionRequired}, but you have prisma@${prismaVersion} installed. This may break in unexpected ways.`
         )
       )
       return

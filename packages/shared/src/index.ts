@@ -19,5 +19,6 @@ export {
   spawnShell,
   requireDistant,
   isPrismaCliLocallyInstalled,
+  getSharedPath,
 } from './shell'
 export { Datasource } from './types'

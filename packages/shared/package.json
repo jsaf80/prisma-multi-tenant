@@ -1,12 +1,8 @@
 {
-  "name": "@prisma-multi-tenant/shared",
-  "version": "2.4.3",
-  "description": "Shared methods and constants for prisma-multi-tenant",
-  "author": {
-    "name": "Thibaud Courtoison",
-    "email": "do.not.press.enter@gmail.com",
-    "url": "https://errorna.me"
-  },
+  "name": "@prisma2-multi-tenant/shared",
+  "version": "2.23.0",
+  "description": "Shared methods and constants for prisma2-multi-tenant",
+  "author": "Thibaud Courtoison <do.not.press.enter@gmail.com> (https://errorna.me)",
   "license": "MIT",
   "main": "build/index.js",
   "typings": "build/index.d.ts",
@@ -20,11 +16,11 @@
     "prettier": "prettier \"src/**/*.ts\" --check"
   },
   "dependencies": {
-    "@prisma/client": "^2.25.0",
+    "@prisma/client": "^2.23.0",
     "find-up": "^5.0.0"
   },
   "peerDependencies": {
-    "prisma": "^2.25.0"
+    "prisma": "^2.23.0"
   },
   "devDependencies": {
     "@types/node": "^15.12.4",
@@ -34,7 +30,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.1",
-    "prisma": "^2.25.0",
     "typescript": "^4.3.4"
   },
   "repository": {

@@ -2,7 +2,7 @@ import fetch, { Response } from 'node-fetch'
 import { Project, initProject } from './helpers/project'
 
 // If timeout error, increase the number
-jest.setTimeout(300000)
+jest.setTimeout(1000000)
 
 describe('dx', () => {
   let project: Project
@@ -10,7 +10,7 @@ describe('dx', () => {
   beforeAll(async () => {
     project = await initProject('cli-dx')
 
-    await project.run('init --url=file:management.db')
+    await project.run('init --provider=sqlite --url=file:management.db')
     await project.run('new --name=test1 --url=file:db1.db')
     await project.run('new --name=test2 --url=file:db2.db')
   })

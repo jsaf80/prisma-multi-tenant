@@ -1,5 +1,5 @@
 // @ts-ignore
-const { MultiTenant } = require('@prisma-multi-tenant/client')
+const { MultiTenant } = require('@prisma2-multi-tenant/client')
 
 describe('constructor', () => {
   test('no options', () => {
@@ -26,7 +26,7 @@ describe('constructor', () => {
 
   test('PrismaClient & PrismaClientManagement', () => {
     const PrismaClient = require(`@prisma/client`)
-    const PrismaClientManagement = require(`.prisma-multi-tenant/management`)
+    const PrismaClientManagement = require(`.prisma2-multi-tenant/management`)
 
     const multiTenant = new MultiTenant({
       PrismaClient,

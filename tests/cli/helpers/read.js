@@ -1,4 +1,4 @@
-const { MultiTenant } = require('@prisma-multi-tenant/client')
+const { MultiTenant } = require('@prisma2-multi-tenant/client')
 
 const multiTenant = new MultiTenant()
 

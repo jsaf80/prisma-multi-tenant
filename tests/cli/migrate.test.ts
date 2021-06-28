@@ -2,7 +2,7 @@ import { Project, initProject } from './helpers/project'
 import { runShell } from './helpers/shell'
 
 // If timeout error, increase the number
-jest.setTimeout(300000)
+jest.setTimeout(1000000)
 
 describe('migrate', () => {
   let project: Project
@@ -11,7 +11,7 @@ describe('migrate', () => {
     project = await initProject('cli-migrate')
 
     try {
-      await project.run('init --url=file:management.db')
+      await project.run('init --provider=sqlite --url=file:management.db')
       await project.run('delete dev --force')
       await project.run('new --name=test1 --url=file:test1.db')
       await project.run('new --name=test2 --url=file:test2.db')

@@ -12,15 +12,15 @@ export class Project {
   }
 
   async run(cmd: string) {
-    console.log(`Running "prisma-multi-tenant ${cmd}" on "${this.name}"`)
+    console.log(`Running "prisma2-multi-tenant ${cmd}" on "${this.name}"`)
 
-    return runShell('prisma-multi-tenant ' + cmd, this.path)
+    return runShell('prisma2-multi-tenant ' + cmd, this.path)
   }
 
   exec(cmd: string) {
-    console.log(`Running "prisma-multi-tenant ${cmd}" on "${this.name}"`)
+    console.log(`Running "prisma2-multi-tenant ${cmd}" on "${this.name}"`)
 
-    return spawnCommand('prisma-multi-tenant ' + cmd, this.path)
+    return spawnCommand('prisma2-multi-tenant ' + cmd, this.path)
   }
 
   expect() {

@@ -7,6 +7,7 @@ import { PmtError } from './errors'
 import { clientManagementPath } from './constants'
 import { Datasource } from './types'
 import { getManagementEnv } from './env'
+import console from 'console'
 
 // Cache nodeModulesPath
 let nodeModulesPath: string
@@ -69,11 +70,16 @@ export const getNodeModules = async (cwd?: string): Promise<string> => {
 }
 
 // Run in this directory
+export const getSharedPath = async (): Promise<string | undefined> => {
+  return (__dirname)
+}
+
+// Run in this directory
 export const runLocal = async (
   cmd: string,
   env?: { [name: string]: string }
 ): Promise<string | Buffer> => {
-  const sharedPath = await findUp('node_modules/@prisma-multi-tenant/shared/build')
+  const sharedPath = await findUp('node_modules/@prisma2-multi-tenant/shared/build')
 
   return runShell(cmd, {
     cwd: sharedPath || '',
@@ -113,6 +119,7 @@ export const isPrismaCliLocallyInstalled = async (): Promise<boolean> => {
 
 export const runLocalPrisma = async (cmd: string): Promise<string | Buffer> => {
   const prismaCliPath = await getPrismaCliPath()
+
   const managementEnv = await getManagementEnv()
 
   const nodeModules = await getNodeModules()
@@ -141,7 +148,7 @@ export const runDistantPrisma = async (
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
       const altCmd =
-        (tenant?.name ? `prisma-multi-tenant env ${tenant.name} -- ` : '') +
+        (tenant?.name ? `prisma2-multi-tenant env ${tenant.name} -- ` : '') +
         'npx prisma ' +
         cmd
       let chalk

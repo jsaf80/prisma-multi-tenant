@@ -17,13 +17,18 @@ export const translateDatasourceUrl = (url: string, cwd?: string): string => {
 }
 
 export const getManagementEnv = async (): Promise<{ [name: string]: string }> => {
+  if (!process.env.MANAGEMENT_PROVIDER) {
+    throw new PmtError('missing-env', { name: 'MANAGEMENT_PROVIDER' })
+  }
   if (!process.env.MANAGEMENT_URL) {
     throw new PmtError('missing-env', { name: 'MANAGEMENT_URL' })
   }
 
+  const managementProvider = process.env.MANAGEMENT_PROVIDER
   const managementUrl = translateDatasourceUrl(process.env.MANAGEMENT_URL)
 
   return {
+    PMT_MANAGEMENT_PROVIDER: managementProvider,
     PMT_MANAGEMENT_URL: managementUrl,
     PMT_OUTPUT: 'PMT_TMP',
   }
