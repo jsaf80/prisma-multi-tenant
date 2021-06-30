@@ -65,7 +65,7 @@ class New implements Command {
     process.env.MANAGEMENT_PROVIDER = databaseProvider
     process.env.MANAGEMENT_URL = translateDatasourceUrl(databaseUrl, path.dirname(schemaPath))
 
-    await migrate.setupManagement('push', '--preview-feature')
+    await migrate.setupManagement('push')
 
     console.log(chalk`\n✅  {green Successfuly created a new management database!}\n`)
   }

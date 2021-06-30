@@ -260,7 +260,7 @@ class Init implements Command {
   setUpManagement() {
     console.log('\n  Setting up management database...')
 
-    return migrate.setupManagement('push', '--preview-feature')
+    return migrate.setupManagement('push')
   }
 
   async createFirstTenant(firstTenant: Datasource, management: Management) {
