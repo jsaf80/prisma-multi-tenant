@@ -1,6 +1,6 @@
 {
   "name": "@prisma2-multi-tenant/client",
-  "version": "2.23.1",
+  "version": "2.23.2",
   "description": "Shared methods and constants for prisma2-multi-tenant",
   "author": {
     "name": "Thibaud Courtoison",
@@ -20,7 +20,7 @@
     "prettier": "prettier \"src/**/*.ts\" --check"
   },
   "dependencies": {
-    "@prisma2-multi-tenant/shared": "^2.23.1"
+    "@prisma2-multi-tenant/shared": "^2.23.2"
   },
   "peerDependencies": {
     "prisma": "^2.23.0"

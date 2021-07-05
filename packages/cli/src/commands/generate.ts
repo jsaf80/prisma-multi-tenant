@@ -8,6 +8,7 @@ import {
 } from '@prisma2-multi-tenant/shared'
 
 import { Command, CommandArguments } from '../types'
+import { updateManagementSchemaFile } from '../helpers/schema'
 
 class Generate implements Command {
   name = 'generate'
@@ -55,6 +56,7 @@ class Generate implements Command {
   }
 
   async generateManagement() {
+    await updateManagementSchemaFile()
     await runLocalPrisma('generate')
   }
 

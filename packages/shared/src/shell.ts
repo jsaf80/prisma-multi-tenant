@@ -71,7 +71,8 @@ export const getNodeModules = async (cwd?: string): Promise<string> => {
 
 // Run in this directory
 export const getSharedPath = async (): Promise<string | undefined> => {
-  return (__dirname)
+  const sharedPath = await findUp('node_modules/@prisma2-multi-tenant/shared/build')
+  return (sharedPath != null ? sharedPath : __dirname)
 }
 
 // Run in this directory

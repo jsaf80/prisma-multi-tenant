@@ -1,6 +1,6 @@
 {
   "name": "@prisma2-multi-tenant/shared",
-  "version": "2.23.1",
+  "version": "2.23.2",
   "description": "Shared methods and constants for prisma2-multi-tenant",
   "author": "Thibaud Courtoison <do.not.press.enter@gmail.com> (https://errorna.me)",
   "license": "MIT",
