@@ -1,6 +1,6 @@
 {
   "name": "prisma2-multi-tenant",
-  "version": "2.23.2",
+  "version": "2.23.3",
   "description": "Command Line Interface for prisma2-multi-tenant",
   "author": {
     "name": "Thibaud Courtoison",
@@ -22,7 +22,7 @@
     "prettier": "prettier \"src/**/*.ts\" --check"
   },
   "dependencies": {
-    "@prisma2-multi-tenant/shared": "^2.23.2",
+    "@prisma2-multi-tenant/shared": "^2.23.3",
     "prisma": "^2.23.0",
     "arg": "^5.0.0",
     "chalk": "^4.1.1",

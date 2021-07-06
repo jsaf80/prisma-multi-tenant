@@ -1,10 +1,8 @@
 import path from "path"
-import { getSchemaPath, getSharedPath, readSchemaFile, writeSchemaFile } from "../../../shared/build"
+import { getSharedPath, readSchemaFile, writeSchemaFile } from '@prisma2-multi-tenant/shared'
 
 export const updateManagementSchemaFile = async (schemaPath?: string): Promise<boolean> => {
     console.log('\n  Updating management schema.prisma file...')
-
-    console.log ("updateManagementSchemaFile > schemaPath (param): ", schemaPath)
 
     const sharedPath = await getSharedPath()
     if (sharedPath == undefined)
@@ -23,10 +21,6 @@ export const updateManagementSchemaFile = async (schemaPath?: string): Promise<b
       managementProvider = managementProvider.slice(1, -1)
     }
     
-    console.log ("updateManagementSchemaFile > schemaPath: ", schemaPath)
-    console.log ("updateManagementSchemaFile > managementProvider: ", managementProvider)
-
-
     // Read/write schema file and try to get first tenant's url
     try {
       let schemaFile = await readSchemaFile(schemaPath)
