@@ -1,9 +1,8 @@
-import Table from 'cli-table3'
 import chalk from 'chalk'
-
 import { Management } from '@prisma2-multi-tenant/shared'
-
 import { Command, CommandArguments } from '../types'
+
+var Table = require('cli-table3');
 
 class List implements Command {
   name = 'list'

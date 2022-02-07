@@ -1,4 +1,4 @@
-import findUp from 'find-up'
+import {findUpSync} from 'find-up'
 import { exec, spawn } from 'child_process'
 import path from 'path'
 import fs from 'fs'
@@ -71,7 +71,7 @@ export const getNodeModules = async (cwd?: string): Promise<string> => {
 
 // Run in this directory
 export const getSharedPath = async (): Promise<string | undefined> => {
-  const sharedPath = await findUp('node_modules/@prisma2-multi-tenant/shared/build')
+  const sharedPath = await findUpSync('node_modules/@prisma2-multi-tenant/shared/build')
   return (sharedPath != null ? sharedPath : __dirname)
 }
 
@@ -80,7 +80,7 @@ export const runLocal = async (
   cmd: string,
   env?: { [name: string]: string }
 ): Promise<string | Buffer> => {
-  const sharedPath = await findUp('node_modules/@prisma2-multi-tenant/shared/build')
+  const sharedPath = await findUpSync('node_modules/@prisma2-multi-tenant/shared/build')
 
   return runShell(cmd, {
     cwd: sharedPath || '',
@@ -105,7 +105,7 @@ export const runDistant = (cmd: string, tenant?: Datasource): Promise<string | B
 export const getPrismaCliPath = async (): Promise<string> => {
   //const nodeModules = await getNodeModules()
   //return path.join(nodeModules, '@prisma/cli/build/index.js')
-  const path = await findUp('node_modules/prisma/build/index.js')
+  const path = await findUpSync('node_modules/prisma/build/index.js')
   if (!path) {
     throw new Error('Cannot find "prisma"')
   }
