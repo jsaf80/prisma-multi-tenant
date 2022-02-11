@@ -14,15 +14,15 @@
     "_tmp_preinstall": "rd /s /q packages\\cli\\build && mkdir packages\\cli\\build && call >> packages\\cli\\build\\index.js"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.0",
-    "@types/node": "^17.0.15",
-    "@types/node-fetch": "^3.0.2",
-    "dotenv-cli": "^5.0.0",
-    "inquirer": "^8.2.0",
-    "jest": "^27.5.0",
-    "node-fetch": "^3.2.0",
-    "ts-jest": "^27.1.3",
-    "typescript": "^4.5.5"
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.4",
+    "@types/node-fetch": "^2.5.10",
+    "dotenv-cli": "^4.0.0",
+    "inquirer": "^8.1.1",
+    "jest": "^27.0.5",
+    "node-fetch": "^2.6.1",
+    "ts-jest": "^27.0.3",
+    "typescript": "^4.3.4"
   },
   "workspaces": [
     "packages/*"
