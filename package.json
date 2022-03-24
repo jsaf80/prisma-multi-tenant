@@ -1,5 +1,5 @@
 {
-  "version": "2.23.3",
+  "version": "2.23.4",
   "private": "true",
   "scripts": {
     "bootstrap": "npm run _tmp_preinstall && npm i && npm run link:shared && npm run link:client && npm run link:cli",
@@ -14,12 +14,12 @@
     "_tmp_preinstall": "rd /s /q packages\\cli\\build && mkdir packages\\cli\\build && call >> packages\\cli\\build\\index.js"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^27.4.1",
     "@types/node": "^15.12.4",
     "@types/node-fetch": "^2.5.10",
     "dotenv-cli": "^4.0.0",
     "inquirer": "^8.1.1",
-    "jest": "^27.0.5",
+    "jest": "^27.5.1",
     "node-fetch": "^2.6.1",
     "ts-jest": "^27.0.3",
     "typescript": "^4.3.4"
