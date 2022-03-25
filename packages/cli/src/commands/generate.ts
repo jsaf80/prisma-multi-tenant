@@ -62,9 +62,9 @@ class Generate implements Command {
 
   async watchGenerateTenants(schemaPath?: string, prismaArgs?: string) {
     schemaPath = schemaPath || (await getSchemaPath())
-    spawnShell(
-      `npx prisma generate --schema ${schemaPath} --watch ${prismaArgs || ''}`
-    ).then((exitCode) => process.exit(exitCode))
+    spawnShell(`npx prisma generate --schema ${schemaPath} --watch ${prismaArgs || ''}`).then(
+      (exitCode) => process.exit(exitCode)
+    )
   }
 }
 

@@ -1,8 +1,6 @@
 import inquirer, { Question } from 'inquirer'
 import chalk from 'chalk'
-
 import { Datasource } from '@prisma2-multi-tenant/shared'
-
 import { CommandArguments } from '../types'
 
 const confirm = async (message: string): Promise<boolean> => {
@@ -48,10 +46,12 @@ const askQuestions = async (
     }
   }
 
-  return (answers as unknown) as Datasource
+  return answers as unknown as Datasource
 }
 
-const managementConf = async (args: CommandArguments): Promise<{ provider?:string, url: string }> => {
+const managementConf = async (
+  args: CommandArguments
+): Promise<{ provider?: string; url: string }> => {
   return askQuestions([
     {
       name: 'provider',
@@ -68,7 +68,7 @@ const managementConf = async (args: CommandArguments): Promise<{ provider?:strin
   ])
 }
 
-const tenantConf = async (args: CommandArguments): Promise<{ name:string, url: string }> => {
+const tenantConf = async (args: CommandArguments): Promise<{ name: string; url: string }> => {
   return askQuestions([
     {
       name: 'name',

@@ -12,7 +12,7 @@ import {
 
 import { Command, CommandArguments } from '../types'
 
-const migrateActions = ['deploy', 'resolve', 'status', "reset"]
+const migrateActions = ['deploy', 'resolve', 'status', 'reset']
 
 class Migrate implements Command {
   name = 'migrate'
@@ -25,7 +25,8 @@ class Migrate implements Command {
     {
       name: 'action',
       optional: false,
-      description: 'Migrate "deploy", "resolve", "status" or "reset" the tenant. For "resolve" and "reset", there are prisma options. Please see Prisma CLI reference.',
+      description:
+        'Migrate "deploy", "resolve", "status" or "reset" the tenant. For "resolve" and "reset", there are prisma options. Please see Prisma CLI reference.',
     },
   ]
   options = [
@@ -43,39 +44,33 @@ class Migrate implements Command {
     if (!name) {
       console.log(`\n  Migrating ${action} all tenants...\n`)
 
-        await this.migrateAllTenants(
-          management,
-          action,
-          args.options.schema,
-          migrateArgs,
-          prismaArgs
-        )
+      await this.migrateAllTenants(management, action, args.options.schema, migrateArgs, prismaArgs)
 
-        console.log(chalk`\n✅  {green Successfuly migrated ${action} all tenants}\n`)
-        return
-      }
+      console.log(chalk`\n✅  {green Successfuly migrated ${action} all tenants}\n`)
+      return
+    }
 
-      // E. Migrate up or down management
-      if (name == 'management') {
-        console.log(`\n  Migrating management ${action}...`)
+    // E. Migrate up or down management
+    if (name == 'management') {
+      console.log(`\n  Migrating management ${action}...`)
 
-        await this.migrateManagement(action, migrateArgs, prismaArgs)
+      await this.migrateManagement(action, migrateArgs, prismaArgs)
 
-        console.log(chalk`\n✅  {green Successfuly migrated ${action} management}\n`)
-        return
-      }
+      console.log(chalk`\n✅  {green Successfuly migrated ${action} management}\n`)
+      return
+    }
 
     // F. Migrate a specific tenant
     console.log(`\n  Migrating "${name}" ${action}...`)
 
-      await this.migrateOneTenant(
-        management,
-        action,
-        name,
-        args.options.schema,
-        migrateArgs,
-        prismaArgs
-      )
+    await this.migrateOneTenant(
+      management,
+      action,
+      name,
+      args.options.schema,
+      migrateArgs,
+      prismaArgs
+    )
 
     console.log(chalk`\n✅  {green Successfuly migrated ${action} "${name}"}\n`)
   }

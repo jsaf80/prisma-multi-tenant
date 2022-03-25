@@ -1,6 +1,6 @@
 {
   "name": "@prisma2-multi-tenant/shared",
-  "version": "2.23.4",
+  "version": "3.11.0",
   "description": "Shared methods and constants for prisma2-multi-tenant",
   "author": "Thibaud Courtoison <do.not.press.enter@gmail.com> (https://errorna.me)",
   "license": "MIT",
@@ -10,6 +10,7 @@
     "build"
   ],
   "scripts": {
+    "prepare": "del /s/q/f build && npm run build && xcopy /y /e src\\prisma\\*.* build\\prisma\\",
     "build": "tsc",
     "lint": "eslint src/**/*.ts",
     "prettier": "prettier \"src/**/*.ts\" --check"

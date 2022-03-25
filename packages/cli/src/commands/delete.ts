@@ -5,8 +5,6 @@ import { Management } from '@prisma2-multi-tenant/shared'
 import { Command, CommandArguments } from '../types'
 import prompt from '../helpers/prompt'
 
-import migrate from './migrate'
-
 class Delete implements Command {
   name = 'delete'
   altNames = ['remove']

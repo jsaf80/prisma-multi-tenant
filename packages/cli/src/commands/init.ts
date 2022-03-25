@@ -14,7 +14,6 @@ import {
   isPrismaCliLocallyInstalled,
   translateDatasourceUrl,
   getSchemaPath,
-  getSharedPath,
 } from '@prisma2-multi-tenant/shared'
 
 import { Command, CommandArguments } from '../types'
@@ -59,7 +58,10 @@ class Init implements Command {
     const managementDatasource = await this.getManagementDatasource(args)
 
     // 3. Update .env file
-    const firstTenant = await this.updateEnvAndSchemaFiles(managementDatasource, args.options.schema)
+    const firstTenant = await this.updateEnvAndSchemaFiles(
+      managementDatasource,
+      args.options.schema
+    )
 
     // 4. Generate clients
     await this.generateClients(args.options.schema)
@@ -114,7 +116,7 @@ class Init implements Command {
   }
 
   async updateEnvAndSchemaFiles(
-    managementDatasouce: {url: string, provider?: string},
+    managementDatasouce: { url: string; provider?: string },
     schemaPath?: string
   ): Promise<Datasource | null> {
     console.log('\n  Updating .env and schema.prisma files...')

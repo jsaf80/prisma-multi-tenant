@@ -2,6 +2,7 @@ import findUp from 'find-up'
 import { exec, spawn } from 'child_process'
 import path from 'path'
 import fs from 'fs'
+import chalk from 'chalk'
 
 import { PmtError } from './errors'
 import { clientManagementPath } from './constants'
@@ -152,10 +153,6 @@ export const runDistantPrisma = async (
         (tenant?.name ? `prisma2-multi-tenant env ${tenant.name} -- ` : '') +
         'npx prisma ' +
         cmd
-      let chalk
-      try {
-        chalk = require('chalk')
-      } catch {}
       if (chalk) {
         console.log(
           chalk`\n  {yellow Note: Prisma seems to be unresponsive. Try running \`${altCmd.trim()}\`}\n`

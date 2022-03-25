@@ -30,7 +30,8 @@ class New implements Command {
     },
     {
       name: 'provider',
-      description: 'Provider of the management database. Required for new management. Not used for new Tenant',
+      description:
+        'Provider of the management database. Required for new management. Not used for new Tenant',
     },
     {
       name: 'url',
