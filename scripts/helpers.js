@@ -5,11 +5,11 @@ const { exec } = require('child_process')
 const packages = ['shared', 'client', 'cli']
 
 const docs = [
-  'doc-basic-js',
-  'doc-basic-ts',
-  'doc-express',
-  'doc-apollo',
-  'doc-redwood',
+  // 'doc-basic-js',
+  // 'doc-basic-ts',
+  // 'doc-express',
+  // 'doc-apollo',
+  // 'doc-redwood',
 ]
 
 const cwd = {

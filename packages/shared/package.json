@@ -1,6 +1,6 @@
 {
   "name": "@prisma2-multi-tenant/shared",
-  "version": "3.11.0",
+  "version": "3.11.1",
   "description": "Shared methods and constants for prisma2-multi-tenant",
   "author": "Thibaud Courtoison <do.not.press.enter@gmail.com> (https://errorna.me)",
   "license": "MIT",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@prisma/client": "^3.11.0",
+    "chalk": "^4.1.1",
     "find-up": "^5.0.0"
   },
   "peerDependencies": {
