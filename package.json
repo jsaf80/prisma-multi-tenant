@@ -1,11 +1,13 @@
 {
-  "version": "3.11.1",
+  "version": "3.14.0",
   "private": "true",
   "scripts": {
-    "bootstrap": "npm run _tmp_preinstall && npm i && npm run link:shared && npm run link:client && npm run link:cli",
-    "link:cli": "cd packages/cli && npm uninstall -g prisma2-multi-tenant && npm link",
-    "link:client": "cd packages/client && npm uninstall -g @prisma2-multi-tenant/client && npm link",
-    "link:shared": "cd packages/shared && npm uninstall -g @prisma2-multi-tenant/shared && npm link",
+    "bootstrap": "npm run _tmp_preinstall && npm i && npm run link:cli",
+    "link:cli": "cd packages/cli && npm rm -g prisma2-multi-tenant && npm link",
+    "build:cli": "cd packages/cli && npm i",
+    "build:client": "cd packages/client && npm i",
+    "build:shared": "cd packages/shared && npm i",
+    "link:remove": "npm ls -g && npm rm -g prisma2-multi-tenant @prisma2-multi-tenant/client @prisma2-multi-tenant/shared && npm ls -g",
     "check": "node scripts/check.js",
     "publish": "node scripts/publish.js",
     "test": "npm run test:cli && npm run test:client",
@@ -14,15 +16,15 @@
     "_tmp_preinstall": "rd /s /q packages\\cli\\build && mkdir packages\\cli\\build && call >> packages\\cli\\build\\index.js"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.1",
-    "@types/node": "^15.12.4",
-    "@types/node-fetch": "^2.5.10",
-    "dotenv-cli": "^4.0.0",
-    "inquirer": "^8.1.1",
-    "jest": "^27.5.1",
-    "node-fetch": "^2.6.1",
-    "ts-jest": "^27.0.3",
-    "typescript": "^4.3.4"
+    "@types/jest": "^27.5.1",
+    "@types/node": "^17.0.35",
+    "@types/node-fetch": "^2.6.1",
+    "dotenv-cli": "^5.1.0",
+    "inquirer": "^8.2.4",
+    "jest": "^28.1.0",
+    "node-fetch": "^3.2.4",
+    "ts-jest": "^28.0.3",
+    "typescript": "^4.7.2"
   },
   "workspaces": [
     "packages/*"
