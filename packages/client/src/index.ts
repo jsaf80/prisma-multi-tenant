@@ -141,6 +141,23 @@ class MultiTenant<PrismaClient extends { $disconnect: () => Promise<void> }> {
     return this.directGet(tenant, options)
   }
 
+  async migrateTenants(): Promise<boolean> {
+    if (!this.management) {
+      throw new Error('Cannot use .migrateTenants(tenant, options) with `useManagement: false`')
+    }
+
+    try {
+      this.isCliAvailable('migrateTenants')
+      const tenants = await this.management.list()
+      tenants.forEach(async (tenant) => {
+        await runDistantPrisma('migrate deploy ', tenant, false)
+      })
+      return true
+    } catch (error) {
+      throw error
+    }
+  }
+
   async deleteTenant(name: string): Promise<Tenant> {
     if (!this.management) {
       throw new Error('Cannot use .deleteTenant(name) with `useManagement: false`')

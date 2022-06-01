@@ -1,0 +1,584 @@
+Prisma is a modern DB toolkit to query, migrate and model your database (https://prisma.io)
+
+Usage
+
+  $ prisma [command]
+
+Commands
+
+            init   Set up Prisma for your app
+        generate   Generate artifacts (e.g. Prisma Client)
+              db   Manage your database schema and lifecycle
+         migrate   Migrate your database
+          studio   Browse your data with Prisma Studio
+          format   Format your schema
+
+Flags
+
+     --preview-feature   Run Preview Prisma commands
+
+Examples
+
+  Set up a new Prisma project
+  $ prisma init
+
+  Generate artifacts (e.g. Prisma Client)
+  $ prisma generate
+
+  Browse your data
+  $ prisma studio
+
+  Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)
+  $ prisma migrate dev
+
+  Pull the schema from an existing database, updating the Prisma schema
+  $ prisma db pull
+
+  Push the Prisma schema state to the database
+  $ prisma db push
+
+*********** prisma init ***********
+
+Set up a new Prisma project
+
+Usage
+
+  $ prisma init [options]
+Options
+
+           -h, --help   Display this help message
+--datasource-provider   Define the datasource provider to use: PostgreSQL, MySQL, SQLite, SQL Server or MongoDB
+                --url   Define a custom datasource url
+
+Examples
+
+Set up a new Prisma project with PostgreSQL (default)
+  $ prisma init
+
+Set up a new Prisma project and specify MySQL as the datasource provider to use
+  $ prisma init --datasource-provider mysql
+
+Set up a new Prisma project and specify the url that will be used
+  $ prisma init --url mysql://user:password@localhost:3306/mydb
+
+
+*********** prisma generate ***********
+
+Generate artifacts (e.g. Prisma Client)
+
+Usage
+
+  $ prisma generate [options]
+
+Options
+
+  -h, --help   Display this help message
+    --schema   Custom path to your Prisma schema
+     --watch   Watch the Prisma schema and rerun after a change
+
+Examples
+
+  With an existing Prisma schema
+    $ prisma generate
+
+  Or specify a schema
+    $ prisma generate --schema=./schema.prisma
+
+  Watch Prisma schema file and rerun after each change
+    $ prisma generate --watch
+
+*********** prisma db ***********
+
+Manage your database schema and lifecycle during development.
+
+Usage
+
+  $ prisma db [command] [options]
+
+Options
+
+  -h, --help   Display this help message
+    --schema   Custom path to your Prisma schema
+
+Commands
+     pull   Pull the state from the database to the Prisma schema using introspection
+     push   Push the state from Prisma schema to the database during prototyping
+     seed   Seed your database
+  execute   Execute native commands to your database
+
+Examples
+
+  Run `prisma db pull`
+  $ prisma db pull
+
+  Run `prisma db push`
+  $ prisma db push
+
+  Run `prisma db seed`
+  $ prisma db seed
+
+  Run `prisma db execute`
+  $ prisma db execute
+
+*********** prisma db pull ***********
+
+Pull the state from the database to the Prisma schema using introspection
+
+Usage
+
+  $ prisma db pull [flags/options]
+
+Flags
+
+              -h, --help   Display this help message
+                 --force   Ignore current Prisma schema file
+                 --print   Print the introspected Prisma schema to stdout
+
+Options
+
+                --schema   Custom path to your Prisma schema
+  --composite-type-depth   Specify the depth for introspecting composite types (e.g. Embedded Documents in MongoDB)
+                           Number, default is -1 for infinite depth, 0 = off
+
+Examples
+
+With an existing Prisma schema
+  $ prisma db pull
+
+Or specify a Prisma schema path
+  $ prisma db pull --schema=./schema.prisma
+
+Instead of saving the result to the filesystem, you can also print it to stdout
+  $ prisma db pull --print
+
+Overwrite the current schema with the introspected schema instead of enriching it
+  $ prisma db pull --force
+
+Set composite types introspection depth to 2 levels
+  $ prisma db pull --composite-type-depth=2
+
+*********** prisma db push ***********
+
+Push the state from your Prisma schema to your database
+
+Usage
+
+  $ prisma db push [options]
+
+Options
+
+           -h, --help   Display this help message
+             --schema   Custom path to your Prisma schema
+   --accept-data-loss   Ignore data loss warnings
+        --force-reset   Force a reset of the database before push
+      --skip-generate   Skip triggering generators (e.g. Prisma Client)
+
+Examples
+
+  Push the Prisma schema state to the database
+  $ prisma db push
+
+  Specify a schema
+  $ prisma db push --schema=./schema.prisma
+
+  Ignore data loss warnings
+  $ prisma db push --accept-data-loss
+
+*********** prisma db seed ***********
+
+Seed your database
+
+Usage
+
+  $ prisma db seed [options]
+
+Options
+
+  -h, --help   Display this help message
+
+*********** prisma db execute ***********
+
+Execute native commands to your database
+
+This command takes as input a datasource, using --url or --schema and a script, using --stdin or --file.
+The input parameters are mutually exclusive, only 1 of each (datasource & script) must be provided.
+
+The output of the command is connector-specific, and is not meant for returning data, but only to report success or failure.
+
+On SQL databases, this command takes as input a SQL script.
+The whole script will be sent as a single command to the database.
+
+This command is currently not supported on MongoDB.
+
+Usage
+
+$ prisma db execute [options]
+
+Options
+
+-h, --help            Display this help message
+
+Datasource input, only 1 must be provided:
+--url                 URL of the datasource to run the command on
+--schema              Path to your Prisma schema file to take the datasource URL from
+
+Script input, only 1 must be provided:
+--file                Path to a file. The content will be sent as the script to be executed
+
+Flags
+
+--stdin              Use the terminal standard input as the script to be executed
+
+Examples
+
+  Execute the content of a SQL script file to the datasource URL taken from the schema
+  $ prisma db execute
+    --file ./script.sql \
+    --schema schema.prisma
+
+  Execute the SQL script from stdin to the datasource URL specified via the `DATABASE_URL` environment variable
+  $ echo 'TRUNCATE TABLE dev;' | \
+    prisma db execute \
+    --stdin \
+    --url="$DATABASE_URL"
+
+  Like previous example, but exposing the datasource url credentials to your terminal history
+  $ echo 'TRUNCATE TABLE dev;' | \
+    prisma db execute \
+    --stdin \
+    --url="mysql://root:root@localhost/mydb"
+
+*********** prisma migrate ***********
+
+Update the database schema with migrations
+
+Usage
+
+  $ prisma migrate [command] [options]
+
+Commands for development
+
+         dev   Create a migration from changes in Prisma schema, apply it to the database
+               trigger generators (e.g. Prisma Client)
+       reset   Reset your database and apply all migrations, all data will be lost
+
+Commands for production/staging
+
+      deploy   Apply pending migrations to the database
+      status   Check the status of your database migrations
+     resolve   Resolve issues with database migrations, i.e. baseline, failed migration, hotfix
+
+Command for any stage
+
+        diff   Compare the database schema from two arbitrary sources
+
+Options
+
+  -h, --help   Display this help message
+    --schema   Custom path to your Prisma schema
+
+Examples
+
+  Create a migration from changes in Prisma schema, apply it to the database, trigger generators (e.g. Prisma Client)
+  $ prisma migrate dev
+
+  Reset your database and apply all migrations
+  $ prisma migrate reset
+
+  Apply pending migrations to the database in production/staging
+  $ prisma migrate deploy
+
+  Check the status of migrations in the production/staging database
+  $ prisma migrate status
+
+  Specify a schema
+  $ prisma migrate status --schema=./schema.prisma
+
+  Compare the database schema from two databases and render the diff as a SQL script
+  $ prisma migrate diff \
+    --from-url "$DATABASE_URL" \
+    --to-url "postgresql://login:password@localhost:5432/db" \
+    --script
+
+*********** prisma migrate dev ***********
+
+Create a migration from changes in Prisma schema, apply it to the database, trigger generators (e.g. Prisma Client)
+
+Usage
+
+  $ prisma migrate dev [options]
+
+Options
+
+       -h, --help   Display this help message
+         --schema   Custom path to your Prisma schema
+       -n, --name   Name the migration
+    --create-only   Create a new migration but do not apply it
+                    The migration will be empty if there are no changes in Prisma schema
+  --skip-generate   Skip triggering generators (e.g. Prisma Client)
+      --skip-seed   Skip triggering seed
+
+Examples
+
+  Create a migration from changes in Prisma schema, apply it to the database, trigger generators (e.g. Prisma Client)
+  $ prisma migrate dev
+
+  Specify a schema
+  $ prisma migrate dev --schema=./schema.prisma
+
+  Create a migration without applying it
+  $ prisma migrate dev --create-only
+  
+*********** prisma migrate reset ***********
+
+Reset your database and apply all migrations, all data will be lost
+
+Usage
+
+  $ prisma migrate reset [options]
+
+Options
+
+       -h, --help   Display this help message
+         --schema   Custom path to your Prisma schema
+  --skip-generate   Skip triggering generators (e.g. Prisma Client)
+      --skip-seed   Skip triggering seed
+      -f, --force   Skip the confirmation prompt
+
+Examples
+
+  Reset your database and apply all migrations, all data will be lost
+  $ prisma migrate reset
+
+  Specify a schema
+  $ prisma migrate reset --schema=./schema.prisma
+
+  Use --force to skip the confirmation prompt
+  $ prisma migrate reset --force
+
+*********** prisma migrate deploy ***********
+
+Apply pending migrations to update the database schema in production/staging
+
+Usage
+
+  $ prisma migrate deploy [options]
+
+Options
+
+  -h, --help   Display this help message
+    --schema   Custom path to your Prisma schema
+
+Examples
+
+  Deploy your pending migrations to your production/staging database
+  $ prisma migrate deploy
+
+  Specify a schema
+  $ prisma migrate deploy --schema=./schema.prisma
+
+*********** prisma migrate status ***********
+
+Check the status of your database migrations
+
+  Usage
+
+    $ prisma migrate status [options]
+
+  Options
+
+  -h, --help   Display this help message
+    --schema   Custom path to your Prisma schema
+
+  Examples
+
+  Check the status of your database migrations
+  $ prisma migrate status
+
+  Specify a schema
+  $ prisma migrate status --schema=./schema.prisma
+
+*********** prisma migrate resolve ***********
+
+Resolve issues with database migrations in deployment databases:
+- recover from failed migrations
+- baseline databases when starting to use Prisma Migrate on existing databases
+- reconcile hotfixes done manually on databases with your migration history
+
+Run "prisma migrate status" to identify if you need to use resolve.
+
+Read more about resolving migration history issues: https://pris.ly/d/migrate-resolve
+
+Usage
+
+  $ prisma migrate resolve [options]
+
+Options
+
+    -h, --help   Display this help message
+      --schema   Custom path to your Prisma schema
+     --applied   Record a specific migration as applied
+ --rolled-back   Record a specific migration as rolled back
+
+Examples
+
+  Update migrations table, recording a specific migration as applied
+  $ prisma migrate resolve --applied 20201231000000_add_users_table
+
+  Update migrations table, recording a specific migration as rolled back
+  $ prisma migrate resolve --rolled-back 20201231000000_add_users_table
+
+  Specify a schema
+  $ prisma migrate resolve --rolled-back 20201231000000_add_users_table --schema=./schema.prisma
+
+*********** prisma migrate diff ***********
+
+Compares the database schema from two arbitrary sources, and outputs the differences either as a human-readable summary (by default) or an executable script.
+
+prisma migrate diff is a read-only command that does not write to your datasource(s).
+prisma db execute can be used to execute its --script output.
+
+The command takes a source --from-... and a destination --to-....
+The source and destination must use the same provider,
+e.g. a diff using 2 different providers like PostgreSQL and SQLite is not supported.
+
+It compares the source with the destination to generate a diff.
+The diff can be interpreted as generating a migration that brings the source schema (from) to the shape of the destination schema (to).
+The default output is a human readable diff, it can be rendered as SQL using `--script` on SQL databases.
+
+See the documentation for more information https://pris.ly/d/migrate-diff
+
+Usage
+
+  $ prisma migrate diff [options]
+
+Options
+
+  -h, --help               Display this help message
+
+From and To inputs (1 `--from-...` and 1 `--to-...` must be provided):
+  --from-url               A datasource URL
+  --to-url
+
+  --from-empty             Flag to assume from or to is an empty datamodel
+  --to-empty
+
+  --from-schema-datamodel  Path to a Prisma schema file, uses the datamodel for the diff
+  --to-schema-datamodel
+
+  --from-schema-datasource Path to a Prisma schema file, uses the datasource url for the diff
+  --to-schema-datasource
+
+  --from-migrations        Path to the Prisma Migrate migrations directory
+  --to-migrations
+
+Shadow database (only required if using --from-migrations or --to-migrations):
+  --shadow-database-url    URL for the shadow database
+
+Flags
+
+  --script                 Render a SQL script to stdout instead of the default human readable summary (not supported on MongoDB)
+  --exit-code              Change the exit code behavior to signal if the diff is empty or not (Empty: 0, Error: 1, Not empty: 2). Default behavior is Success: 0, Error: 1.
+
+Examples
+
+  From database to database as summary
+    e.g. compare two live databases
+  $ prisma migrate diff \
+    --from-url "$DATABASE_URL" \
+    --to-url "postgresql://login:password@localhost:5432/db2"
+
+  From a live database to a Prisma datamodel
+    e.g. roll forward after a migration failed in the middle
+  $ prisma migrate diff \
+    --shadow-database-url "$SHADOW_DB" \
+    --from-url "$PROD_DB" \
+    --to-schema-datamodel=next_datamodel.prisma \
+    --script
+
+  From a live database to a datamodel
+    e.g. roll backward after a migration failed in the middle
+  $ prisma migrate diff \
+    --shadow-database-url "$SHADOW_DB" \
+    --from-url "$PROD_DB" \
+    --to-schema-datamodel=previous_datamodel.prisma \
+    --script
+
+  From a Prisma Migrate `migrations` directory to another database
+    e.g. generate a migration for a hotfix already applied on production
+  $ prisma migrate diff \
+    --shadow-database-url "$SHADOW_DB" \
+    --from-migrations ./migrations \
+    --to-url "$PROD_DB" \
+    --script
+
+  Execute the --script output with `prisma db execute` using bash pipe `|`
+  $ prisma migrate diff \
+    --from-[...] \
+    --to-[...] \
+    --script | prisma db execute --stdin --url="$DATABASE_URL"
+
+  Detect if both sources are in sync, it will exit with exit code 2 if changes are detected
+  $ prisma migrate diff \
+    --exit-code \
+    --from-[...] \
+    --to-[...]
+
+*********** prisma studio ***********
+
+Browse your data with Prisma Studio
+
+Usage
+
+  $ prisma studio [options]
+
+Options
+
+  -h, --help        Display this help message
+  -p, --port        Port to start Studio on
+  -b, --browser     Browser to open Studio in
+  -n, --hostname    Hostname to bind the Express server to
+  --schema          Custom path to your Prisma schema
+
+Examples
+
+  Start Studio on the default port
+    $ prisma studio
+
+  Start Studio on a custom port
+    $ prisma studio --port 5555
+
+  Start Studio in a specific browser
+    $ prisma studio --port 5555 --browser firefox
+    $ BROWSER=firefox prisma studio --port 5555
+
+  Start Studio without opening in a browser
+    $ prisma studio --port 5555 --browser none
+    $ BROWSER=none prisma studio --port 5555
+
+  Specify a schema
+    $ prisma studio --schema=./schema.prisma
+
+*********** prisma format ***********
+
+Format a Prisma schema.
+
+Usage
+
+  $ prisma format [options]
+
+Options
+
+  -h, --help   Display this help message
+    --schema   Custom path to your Prisma schema
+
+Examples
+
+With an existing Prisma schema
+  $ prisma format
+
+Or specify a Prisma schema path
+  $ prisma format --schema=./schema.prisma
+
+
+
