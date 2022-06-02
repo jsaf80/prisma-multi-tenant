@@ -1,7 +1,12 @@
 import path from 'path'
 import fs from 'fs'
 
-import { Management, runDistantPrisma, requireDistant } from '@prisma2-multi-tenant/shared'
+import {
+  Management,
+  runDistantPrisma,
+  requireDistant,
+  Datasource,
+} from '@prisma2-multi-tenant/shared'
 
 interface MultiTenantOptions {
   useManagement?: boolean
@@ -141,18 +146,17 @@ class MultiTenant<PrismaClient extends { $disconnect: () => Promise<void> }> {
     return this.directGet(tenant, options)
   }
 
-  async migrateTenants(): Promise<boolean> {
+  async migrateTenants(): Promise<Datasource[]> {
     if (!this.management) {
       throw new Error('Cannot use .migrateTenants(tenant, options) with `useManagement: false`')
     }
-
     try {
       this.isCliAvailable('migrateTenants')
       const tenants = await this.management.list()
       tenants.forEach(async (tenant) => {
         await runDistantPrisma('migrate deploy ', tenant, false)
       })
-      return true
+      return tenants
     } catch (error) {
       throw error
     }
