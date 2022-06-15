@@ -148,12 +148,12 @@ class MultiTenant<PrismaClient extends { $disconnect: () => Promise<void> }> {
 
   async migrateTenants(): Promise<Datasource[]> {
     if (!this.management) {
-      throw new Error('Cannot use .migrateTenants(tenant, options) with `useManagement: false`')
+      throw new Error('Cannot use .migrateTenants() with `useManagement: false`')
     }
     try {
       this.isCliAvailable('migrateTenants')
       const tenants = await this.management.list()
-      tenants.forEach(async (tenant) => {
+      tenants.forEach(async (tenant: Datasource) => {
         await runDistantPrisma('migrate deploy ', tenant, false)
       })
       return tenants

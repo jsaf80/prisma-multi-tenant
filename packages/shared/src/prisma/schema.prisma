@@ -9,7 +9,7 @@ generator client {
   binaryTargets = ["native"]
 }
 
-model Tenant {
+model tenant {
   name     String @id
   url      String
 }

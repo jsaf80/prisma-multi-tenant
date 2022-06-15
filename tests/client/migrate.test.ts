@@ -53,13 +53,13 @@ describe("migrate", () => {
     })
 
     await expect(multiTenant.migrateTenants())
-      .resolves.toStrictEqual([
-        { name: 'dev', url: 'file:dev.db' },
-        { name: 'test1', url: 'file:dev1.db' },
-        { name: 'test-create-1', url: 'file:test-create-1.db' },
-        { name: 'test-migrate-1', url: 'file:test-migrate-1.db' },
-        { name: 'test-migrate-2', url: 'file:test-migrate-2.db' },
-        { name: 'test-exists-1', url: 'file:test-exists-1.db' }
+      .resolves.toEqual([
+        {name: 'dev', url:'file:dev.db' },
+        {name: 'test1', url:'file:dev1.db' },
+        {name: 'test-exists-1', url:'file:test-exists-1.db' },
+        {name: 'test-migrate-1', url:'file:test-migrate-1.db' },
+        {name: 'test-migrate-2', url:'file:test-migrate-2.db' },
+        {name: 'test-create-1', url:'file:test-create-1.db' }
       ])
       .then(() => multiTenant.disconnect());
   });

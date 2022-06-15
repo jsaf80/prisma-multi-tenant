@@ -3,7 +3,7 @@ import { clientManagementPath } from './constants'
 import { requireDistant } from './shell'
 import { Datasource } from './types'
 import { PmtError } from './errors'
-import {PrismaClientKnownRequestError} from '@prisma/client/runtime';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 
 interface ManagementOptions {
   PrismaClient?: any
@@ -51,7 +51,7 @@ export default class Management {
         data: tenant,
       })
     } catch (err) {
-      if (err instanceof PrismaClientKnownRequestError && err.code == 'P2002') 
+      if (err instanceof PrismaClientKnownRequestError && err.code == 'P2002')
         throw new PmtError('tenant-already-exists', tenant.name)
       throw err
     }
@@ -94,7 +94,7 @@ export default class Management {
         data: update,
       })
     } catch (err) {
-      if (err instanceof PrismaClientKnownRequestError && err.message.includes('RecordNotFound')) 
+      if (err instanceof PrismaClientKnownRequestError && err.message.includes('RecordNotFound'))
         throw new PmtError('tenant-does-not-exist', name)
       throw err
     }
@@ -106,7 +106,7 @@ export default class Management {
     try {
       return await client.tenant.delete({ where: { name } })
     } catch (err) {
-      if (err instanceof PrismaClientKnownRequestError && err.message.includes('RecordNotFound')) 
+      if (err instanceof PrismaClientKnownRequestError && err.message.includes('RecordNotFound'))
         throw new PmtError('tenant-does-not-exist', name)
       throw err
     }
@@ -124,10 +124,10 @@ export default class Management {
     //   provider: "",
     //   url: tenant.url,
     // }
-    const newTenant: { name: string,  url: string } = {
+    const newTenant: { name: string; url: string } = {
       name: tenant.name,
       url: tenant.url,
     }
-    return (newTenant as unknown) as Datasource
+    return newTenant as unknown as Datasource
   }
 }

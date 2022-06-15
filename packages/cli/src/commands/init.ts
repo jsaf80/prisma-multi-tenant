@@ -103,6 +103,7 @@ class Init implements Command {
   async getManagementDatasource(args: CommandArguments) {
     console.log(chalk`\n  {yellow We will now configure the management database:}\n`)
 
+    // eslint-disable-next-line
     let { url: managementUrl, provider: managementProvider } = await prompt.managementConf(args)
 
     const schemaPath = args.options.schema || (await getSchemaPath())
