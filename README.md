@@ -1,4 +1,4 @@
-<h1 align="center"><strong>This is a fork from <a href="https://github.com/Intelligix/prisma-multi-tenant">Intelligix/prisma-multi-tenanty</a> original forked from <a href="https://github.com/Errorname/prisma-multi-tenant">Errorname/prisma-multi-tenant</a>, who has all credits</strong></h1>
+<h1 align="center"><strong>This is a fork from <a href="https://github.com/Intelligix/prisma-multi-tenant">Intelligix/prisma-multi-tenant</a> original forked from <a href="https://github.com/Errorname/prisma-multi-tenant">Errorname/prisma-multi-tenant</a>, who has all credits</strong></h1>
 <h2 align="center">I've just updated the dependencies for use with Prisma 4.7</h2>
 <p>All tests passed.</p>
 <h1 align="center">Prisma-multi-tenant 🧭</h1>
