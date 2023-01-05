@@ -1,6 +1,6 @@
 import inquirer, { Question } from 'inquirer'
 import chalk from 'chalk'
-import { Datasource } from '@prisma2-multi-tenant/shared'
+import { Datasource } from '@prisma4-multi-tenant/shared'
 import { CommandArguments } from '../types'
 
 const confirm = async (message: string): Promise<boolean> => {

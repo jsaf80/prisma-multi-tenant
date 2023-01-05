@@ -33,7 +33,7 @@ export default class Management {
         PrismaClient = requireDistant(clientManagementPath).PrismaClient
       } catch {
         console.error(
-          `\nError: Cannot find module '.prisma2-multi-tenant/management'.\n\nTry running "prisma2-multi-tenant generate"\n`
+          `\nError: Cannot find module '.prisma4-multi-tenant/management'.\n\nTry running "prisma4-multi-tenant generate"\n`
         )
         process.exit(1)
       }

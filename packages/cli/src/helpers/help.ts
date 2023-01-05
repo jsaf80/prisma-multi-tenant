@@ -8,20 +8,20 @@ const packageJson = require('../../package.json')
 
 const printGlobalHelp = (): void => {
   console.log(chalk`
-  {bold.cyan 🧭  prisma2-multi-tenant} {grey v${packageJson.version}}
-  
+  {bold.cyan 🧭  prisma4-multi-tenant} {grey v${packageJson.version}}
+
   {bold USAGE}
 
-    {bold.italic prisma2-multi-tenant} [command] [args]
-    
+    {bold.italic prisma4-multi-tenant} [command] [args]
+
     {grey Examples:}
-        {grey prisma2-multi-tenant new}
-        {grey prisma2-multi-tenant migrate my_tenant up}
-        {grey prisma2-multi-tenant env my_tenant -- npx prisma introspect}
+        {grey prisma4-multi-tenant new}
+        {grey prisma4-multi-tenant migrate my_tenant up}
+        {grey prisma4-multi-tenant env my_tenant -- npx prisma introspect}
         {grey ...}
 
   {bold COMMANDS}
-    
+
 ${Object.values(commands)
   .map((command: Command): string => {
     const args = command.args
@@ -47,13 +47,13 @@ ${Object.values(commands)
 
 const printCommandHelp = (command: Command): void => {
   console.log(chalk`
-  {bold.cyan 🧭  prisma2-multi-tenant} {bold.yellow ${command.name}}
+  {bold.cyan 🧭  prisma4-multi-tenant} {bold.yellow ${command.name}}
 
     ${command.description}
 
   {bold USAGE}
 
-    {bold.italic prisma2-multi-tenant} ${command.name}${
+    {bold.italic prisma4-multi-tenant} ${command.name}${
     command.args.length > 0 ? ' ' : ''
   }${command.args
     .map(

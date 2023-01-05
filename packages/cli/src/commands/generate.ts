@@ -5,7 +5,7 @@ import {
   runLocalPrisma,
   spawnShell,
   getSchemaPath,
-} from '@prisma2-multi-tenant/shared'
+} from '@prisma4-multi-tenant/shared'
 
 import { Command, CommandArguments } from '../types'
 import { updateManagementSchemaFile } from '../helpers/schema'

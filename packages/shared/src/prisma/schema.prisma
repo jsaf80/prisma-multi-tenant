@@ -1,5 +1,5 @@
 datasource management {
-  provider = ["sqlite","mysql","postgresql"]
+  provider = ["sqlite","mysql","postgresql","cockroachdb"]
   url      = env("PMT_MANAGEMENT_URL")
 }
 

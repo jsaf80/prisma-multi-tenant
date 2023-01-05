@@ -1,1 +1,1 @@
-Shared methods and constants for [prisma2-multi-tenant](https://www.npmjs.com/package/prisma2-multi-tenant)
+Shared methods and constants for [prisma4-multi-tenant](https://www.npmjs.com/package/prisma4-multi-tenant)

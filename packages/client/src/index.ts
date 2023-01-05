@@ -6,7 +6,7 @@ import {
   runDistantPrisma,
   requireDistant,
   Datasource,
-} from '@prisma2-multi-tenant/shared'
+} from '@prisma4-multi-tenant/shared'
 
 interface MultiTenantOptions {
   useManagement?: boolean
@@ -201,6 +201,6 @@ class MultiTenant<PrismaClient extends { $disconnect: () => Promise<void> }> {
 
 // Fix for Vercel + Next issue
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const requirePrismaManagement = () => require('.prisma2-multi-tenant/management').PrismaClient
+const requirePrismaManagement = () => require('.prisma4-multi-tenant/management').PrismaClient
 
 export { MultiTenant, requirePrismaManagement }

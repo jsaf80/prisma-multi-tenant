@@ -72,7 +72,7 @@ export const getNodeModules = async (cwd?: string): Promise<string> => {
 
 // Run in this directory
 export const getSharedPath = async (): Promise<string | undefined> => {
-  const sharedPath = await findUp('node_modules/@prisma2-multi-tenant/shared/build')
+  const sharedPath = await findUp('node_modules/@prisma4-multi-tenant/shared/build')
   return sharedPath != null ? sharedPath : __dirname
 }
 
@@ -81,7 +81,7 @@ export const runLocal = async (
   cmd: string,
   env?: { [name: string]: string }
 ): Promise<string | Buffer> => {
-  const sharedPath = await findUp('node_modules/@prisma2-multi-tenant/shared/build')
+  const sharedPath = await findUp('node_modules/@prisma4-multi-tenant/shared/build')
 
   return runShell(cmd, {
     cwd: sharedPath || '',
@@ -150,7 +150,7 @@ export const runDistantPrisma = async (
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
       const altCmd =
-        (tenant?.name ? `prisma2-multi-tenant env ${tenant.name} -- ` : '') + 'npx prisma ' + cmd
+        (tenant?.name ? `prisma4-multi-tenant env ${tenant.name} -- ` : '') + 'npx prisma ' + cmd
       if (chalk) {
         console.log(
           chalk`\n  {yellow Note: Prisma seems to be unresponsive. Try running \`${altCmd.trim()}\`}\n`

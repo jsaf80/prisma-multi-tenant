@@ -1,1 +1,1 @@
-export const clientManagementPath = '.prisma2-multi-tenant/management'
+export const clientManagementPath = '.prisma4-multi-tenant/management'

@@ -1,0 +1,47 @@
+{
+  "name": "@prisma-multi-tenant/blitz",
+  "version": "2.4.2",
+  "description": "Blitz plugin for prisma-multi-tenant",
+  "author": {
+    "name": "Thibaud Courtoison",
+    "email": "do.not.press.enter@gmail.com",
+    "url": "https://errorna.me"
+  },
+  "license": "MIT",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "prepare": "rm -rf build && npm run build",
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts",
+    "prettier": "prettier \"src/**/*.ts\" --check"
+  },
+  "dependencies": {
+    "@prisma4-multi-tenant/client": "^4.7.1"
+  },
+  "peerDependencies": {
+    "blitz": "^0.16.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsaf80/prisma-multi-tenant.git"
+  },
+  "keywords": [
+    "prisma",
+    "multi-tenant",
+    "blitz",
+    "graphql"
+  ],
+  "bugs": {
+    "url": "https://github.com/jsaf80/prisma-multi-tenant/issues"
+  },
+  "homepage": "https://github.com/jsaf80/prisma-multi-tenant/tree/master/packages/blitz",
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true
+  }
+}

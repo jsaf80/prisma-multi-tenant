@@ -1,7 +1,7 @@
 {
-  "name": "@prisma2-multi-tenant/shared",
-  "version": "3.15.2",
-  "description": "Shared methods and constants for prisma2-multi-tenant",
+  "name": "@prisma4-multi-tenant/shared",
+  "version": "4.7.1",
+  "description": "Shared methods and constants for prisma4-multi-tenant",
   "author": "Thibaud Courtoison <do.not.press.enter@gmail.com> (https://errorna.me)",
   "license": "MIT",
   "main": "build/index.js",
@@ -10,18 +10,18 @@
     "build"
   ],
   "scripts": {
-    "prepare": "del /s/q/f build && npm run build && xcopy /y /e src\\prisma\\*.* build\\prisma\\",
+    "prepare": "rm -rf build && npm run build && cp -rf src/prisma build/prisma",
     "build": "tsc",
     "lint": "eslint src/**/*.ts",
     "prettier": "prettier \"src/**/*.ts\" --check"
   },
   "dependencies": {
-    "@prisma/client": "^3.15.2",
+    "@prisma/client": ">=4.7.1",
     "chalk": "^4.1.2",
     "find-up": "^5.0.0"
   },
   "peerDependencies": {
-    "prisma": "^3.15.2"
+    "prisma": "^4.7.1"
   },
   "devDependencies": {
     "@types/node": "^17.0.35",

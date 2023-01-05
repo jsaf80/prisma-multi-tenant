@@ -14,7 +14,7 @@ import {
   isPrismaCliLocallyInstalled,
   translateDatasourceUrl,
   getSchemaPath,
-} from '@prisma2-multi-tenant/shared'
+} from '@prisma4-multi-tenant/shared'
 
 import { Command, CommandArguments } from '../types'
 import { useYarn } from '../helpers/misc'
@@ -51,7 +51,7 @@ class Init implements Command {
   description = 'Init multi-tenancy for your application'
 
   async execute(args: CommandArguments, management: Management) {
-    // 1. Install prisma2-multi-tenant to the application
+    // 1. Install prisma4-multi-tenant to the application
     await this.installPMT()
 
     // 2. Prompt management url
@@ -80,17 +80,17 @@ class Init implements Command {
     }
 
     console.log(chalk`\n✅  {green Your app is now ready for multi-tenancy!}\n`)
-    console.log(chalk`  {bold Next step:} Create a new tenant with \`prisma2-multi-tenant new\`\n`)
+    console.log(chalk`  {bold Next step:} Create a new tenant with \`prisma4-multi-tenant new\`\n`)
   }
 
   async installPMT() {
-    console.log('\n  Installing `@prisma2-multi-tenant/client` as a dependency in your app...')
+    console.log('\n  Installing `@prisma4-multi-tenant/client` as a dependency in your app...')
 
     const isUsingYarn = await useYarn()
-    const command = isUsingYarn ? 'yarn add --ignore-workspace-root-check' : 'npm install'
+    const command = isUsingYarn ? "yarn install" : "yarn install" //prettier-ignore
     const devOption = isUsingYarn ? '--dev' : '-D'
 
-    await runShell(`${command} @prisma2-multi-tenant/client@${packageJson.version}`)
+    await runShell(command) //prettier-ignore
     // await runShell(`${command} ../../../packages/client`)
 
     if (!(await isPrismaCliLocallyInstalled())) {
@@ -183,13 +183,13 @@ class Init implements Command {
 
     envFile += `
 
-      # The following env variable is used by prisma2-multi-tenant
-      
+      # The following env variable is used by prisma4-multi-tenant
+
       MANAGEMENT_PROVIDER=${managementDatasouce.provider}
       MANAGEMENT_URL=${managementDatasouce.url}
     `
       .split('\n')
-      .map((x) => x.substr(6))
+      .map((x) => x.substring(6))
       .join('\n')
 
     await writeEnvFile(envFile, schemaPath)
@@ -239,21 +239,21 @@ class Init implements Command {
 
     const script = `
       // const { PrismaClient } = require('@prisma/client') // Uncomment for TypeScript support
-      const { MultiTenant } = require('@prisma2-multi-tenant/client')
+      const { MultiTenant } = require('@prisma4-multi-tenant/client')
 
       // This is the name of your first tenant, try with another one
       const name = "${firstTenant?.name || 'dev'}"
 
       // If you are using TypeScript, you can do "new MultiTenant<PrismaClient>()" for autocompletion
       const multiTenant = new MultiTenant()
-      
+
       async function main() {
-        // prisma2-multi-tenant will connect to the correct tenant
+        // prisma4-multi-tenant will connect to the correct tenant
         const prisma = await multiTenant.get(name)
-      
+
         // You keep the same interface as before
         const ${modelNamePlural} = await prisma.${modelNameSingular}.findMany()
-      
+
         console.log(${modelNamePlural})
       }
 
@@ -264,9 +264,9 @@ class Init implements Command {
         })
     `
       .split('\n')
-      .map((x) => x.substr(6))
+      .map((x) => x.substring(6))
       .join('\n')
-      .substr(1)
+      .substring(1)
 
     await fs.promises.writeFile(process.cwd() + '/multi-tenancy-example.js', script)
   }

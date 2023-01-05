@@ -1,6 +1,6 @@
-<h1 align="center"><strong>This is a fork from <a href="https://github.com/Errorname/prisma-multi-tenant">Errorname/prisma-multi-tenant</a>, that have all credits</strong></h1>
-<h2 align="center">I am just trying to update the dependencies for use it in my project</h2>
-<p></p>
+<h1 align="center"><strong>This is a fork from <a href="https://github.com/Intelligix/prisma-multi-tenant">Intelligix/prisma-multi-tenanty</a> original forked from <a href="https://github.com/Errorname/prisma-multi-tenant">Errorname/prisma-multi-tenant</a>, who has all credits</strong></h1>
+<h2 align="center">I've just updated the dependencies for use with Prisma 4.7</h2>
+<p>All tests passed.</p>
 <h1 align="center">Prisma-multi-tenant 🧭</h1>
 <p align="center">
   <a href="https://www.npmjs.com/package/prisma-multi-tenant">
@@ -21,3 +21,4 @@
 </p>
 
 > 🧭 Use Prisma as a multi-tenant provider for your application
+
