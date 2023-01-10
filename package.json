@@ -25,16 +25,16 @@
     "dist/*"
   ],
   "scripts": {
-    "prepare": "npm run compile",
+    "prepare": "npm run compile 1>&-",
     "compile": "rm -rf dist && mkdir -p dist/cli && touch dist/cli/index.js && npm run build && chmod -f +x dist/cli/index.js && mkdir -p dist/shared/prisma && cp -R shared/prisma/* dist/shared/prisma && cp -R package.dist.json dist/package.json",
-    "prebuild": "npx eslint .",
+    "prebuild": "npx eslint . --quiet",
     "build": "tsc --build",
     "test": "npm run test:cli && npm run test:client",
     "test:cli": "SILENT_TEST=true jest tests/cli/",
     "test:migrate": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/cli/migrate.test.ts --silent=false",
     "test:client": "bash tests/playground/test-client.sh",
     "test:client:seed": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/playground/test-client/tests/seed.test.ts",
-    "postprepare": "npm install file:. --no-save &>/dev/null"
+    "postprepare": "npm install file:. --no-save 1>&-"
   },
   "keywords": [
     "multi",
