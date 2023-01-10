@@ -12,7 +12,7 @@
 <li>...</li>
 </ul>
 <p>To test this package just type:</p>
-```
+```sh
 $>npm install
 $>npm test
 ```
