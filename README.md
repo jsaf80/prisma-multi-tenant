@@ -12,10 +12,12 @@
 <li>...</li>
 </ul>
 <p>To test this package just type:</p>
+
 ```sh
 $>npm install
-$>npm test
+$>npm run test
 ```
+
 <h1 align="center">Prisma4-multi-tenant 🧭</h1>
 <p align="center">
   <a href="https://www.npmjs.com/package/prisma-multi-tenant">
@@ -34,6 +36,10 @@ $>npm test
     <img alt="Twitter: Errorname_" src="https://img.shields.io/twitter/follow/Errorname_.svg?style=social" target="_blank" />
   </a>
 </p>
+
+<hr/>
+<h1>Old documentation:</h1>
+<hr/>
 
 > 🧭 Use Prisma as a multi-tenant provider for your application
 
