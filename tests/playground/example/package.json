@@ -2,16 +2,25 @@
   "name": "script",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@prisma/client": ">=4.7.1",
     "prisma": "^4.7.1",
-    "fs-extra": "^10.1.0"
+    "fs-extra": "^10.1.0",
+    "prisma4-multi-tenant": "^4.7.2"
   },
   "scripts": {
-    "dev": "node ./script.js"
+    "dev": "node ./script.js",
+    "test": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/",
+    "test:constructor": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/constructor.test.ts",
+    "test:create": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/create.test.ts",
+    "test:delete": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/delete.test.ts",
+    "test:exists": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/exists.test.ts",
+    "test:get": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/get.test.ts",
+    "test:migrate": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js --silent false --verbose false tests/migrate.test.ts --detectOpenHandles",
+    "test:seed": "PMT_TEST=true node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js tests/seed.test.ts"
   },
   "engines": {
     "node": ">=10.0.0"
   }
 }
-

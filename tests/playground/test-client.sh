@@ -1,15 +1,12 @@
 # Prepare folder for client tests
+echo "Preparing client tests..."
 rm -Rf tests/playground/test-client && cp -R tests/playground/example tests/playground/test-client
 cd tests/playground/test-client
-#yarn i
-PMT_TEST=true npx prisma4-multi-tenant init --provider=sqlite --url=file:management.db
+#npm install
+PMT_TEST=true npx prisma4-multi-tenant init --provider=sqlite --url=file:management.db --silent=true
 #npm link prisma4-multi-tenant
-npx prisma4-multi-tenant new --name=test1 --provider=sqlite --url=file:dev1.db
+npx prisma4-multi-tenant new --name=test1 --provider=sqlite --url=file:dev1.db --silent=true
 cp -R ../../client/ tests/
-cp -R ../../../jest.config.js .
-PMT_TEST=true jest tests/constructor.test.ts --runInBand --detectOpenHandles --forceExit
-PMT_TEST=true jest tests/create.test.ts --runInBand --detectOpenHandles --forceExit
-PMT_TEST=true jest tests/delete.test.ts --runInBand --detectOpenHandles --forceExit
-PMT_TEST=true jest tests/exists.test.ts --runInBand --detectOpenHandles --forceExit
-PMT_TEST=true jest tests/get.test.ts --runInBand --detectOpenHandles --forceExit
-PMT_TEST=true jest tests/migrate.test.ts --runInBand --detectOpenHandles --forceExit
+echo "Running client tests..."
+npm install --save-dev jest @types/jest ts-jest @babel/plugin-transform-modules-commonjs &>/dev/null
+npm run test

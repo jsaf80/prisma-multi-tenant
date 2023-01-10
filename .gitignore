@@ -1,9 +1,11 @@
+# .gitignore
 node_modules
 build
 tests/playground/*
 !tests/playground/example
 !tests/playground/test-client.sh
-packages/cli/README.md
 yarn.lock
 package-lock.json
 .npmrc
+docs
+tests

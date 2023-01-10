@@ -1,0 +1,9 @@
+# .npmignore
+node_modules
+build
+tests/playground/*
+!tests/playground/example
+!tests/playground/test-client.sh
+yarn.lock
+package-lock.json
+.npmrc

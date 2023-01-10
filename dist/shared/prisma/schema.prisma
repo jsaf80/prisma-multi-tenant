@@ -1,0 +1,15 @@
+datasource management {
+  provider = ["sqlite","mysql","postgresql","cockroachdb"]
+  url      = env("PMT_MANAGEMENT_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = env("PMT_OUTPUT")
+  binaryTargets = ["native"]
+}
+
+model tenant {
+  name     String @id
+  url      String
+}

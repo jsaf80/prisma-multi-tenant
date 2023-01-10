@@ -1,0 +1,83 @@
+{
+  "name": "prisma4-multi-tenant",
+  "version": "4.7.2",
+  "description": "Multi tenancy for Prisma 4.",
+  "bin": {
+    "prisma4-multi-tenant": "./dist/cli/index.js",
+    "p4mt": "./dist/cli/index.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./cli": {
+      "import": "./dist/cli/index.js",
+      "require": "./dist/cli/index.js"
+    },
+    "./shared": {
+      "import": "./dist/shared/index.js",
+      "require": "./dist/shared/index.js"
+    }
+  },
+  "type": "module",
+  "files": ["dist/*", "shared/prisma"],
+  "scripts": {},
+  "keywords": ["multi", "tenant", "prisma", "database"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsaf80/prisma-multi-tenant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jsaf80/prisma-multi-tenant/issues"
+  },
+  "homepage": "https://github.com/jsaf80/prisma-multi-tenant#readme",
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true
+  },
+  "author": {
+    "name": "Thibaud Courtoison",
+    "email": "do.not.press.enter@gmail.com",
+    "url": "https://errorna.me"
+  },
+  "contributors": [
+    {
+      "name": "Alex Falke",
+      "url": "https://github.com/jsaf80/"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3",
+    "@types/jest": "^29.2.5",
+    "@types/node": "^18.11.18",
+    "@types/node-fetch": "^2.6.2",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "dotenv-cli": "^6.0.0",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "inquirer": "^9.1.4",
+    "jest": "^29.3.1",
+    "node-fetch": "^3.3.0",
+    "prettier": "^2.8.2",
+    "ts-jest": "^29.0.3",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@prisma/client": ">=4.7.1",
+    "arg": "^5.0.2",
+    "chalk": "^5.2.0",
+    "cli-table3": "^0.6.3",
+    "dotenv": "^16.0.3",
+    "find-up": "^6.3.0",
+    "prisma": "^4.7.1",
+    "prisma4-multi-tenant": "^4.7.2"
+  },
+  "peerDependencies": {
+    "prisma": "^4.7.1"
+  }
+}

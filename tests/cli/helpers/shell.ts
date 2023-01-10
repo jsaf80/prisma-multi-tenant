@@ -1,5 +1,6 @@
 import { exec, spawn, ChildProcess } from 'child_process'
 import fs from 'fs'
+import path from 'path'
 
 const playgroundPath = __dirname + '/../../playground/'
 
