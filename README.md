@@ -11,12 +11,11 @@
 <li>adding support/testing for redwoodjs</li>
 <li>...</li>
 </ul>
-<p>To test this package just type:
+<p>To test this package just type:</p>
 ```
 $>npm install
 $>npm test
 ```
-</p>
 <h1 align="center">Prisma4-multi-tenant 🧭</h1>
 <p align="center">
   <a href="https://www.npmjs.com/package/prisma-multi-tenant">
