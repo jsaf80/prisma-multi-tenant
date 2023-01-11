@@ -1,5 +1,5 @@
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
+//import { createRequire } from 'module'
+//const require = createRequire(import.meta.url)
 import fs from 'fs'
 import path from 'path'
 import chalk from 'chalk'
@@ -18,17 +18,18 @@ import {
   isPrismaCliLocallyInstalled,
   translateDatasourceUrl,
   getSchemaPath,
+  isPrisma4MultiTenantLocallyInstalled,
 } from '../../index.js'
 
 import { Command, CommandArguments } from '../types.js'
-import { useYarn } from '../helpers/misc.js'
+//import { useYarn } from '../helpers/misc.js'
 import prompt from '../helpers/prompt.js'
 
 import generate from './generate.js'
 import migrate from './migrate.js'
 import { updateManagementSchemaFile } from '../helpers/schema.js'
 
-const packageJson = require(path.join(__dirname, '../../package.json'))
+//const packageJson = require(path.join(__dirname, '../../package.json'))
 
 class Init implements Command {
   name = 'init'
@@ -101,15 +102,16 @@ class Init implements Command {
   }
 
   async installPMT() {
-    console.log('\n  Installing `prisma4-multi-tenant` as a dependency in your app...')
-
-    const isUsingYarn = await useYarn()
+    const isUsingYarn = false // await useYarn()
     const command = isUsingYarn ? 'yarn add --ignore-workspace-root-check' : 'npm install'
     const devOption = isUsingYarn ? '--dev' : '-D'
-    const p4mtFolder = path.join(__dirname, '../../../../../')
-    //await runShell(`${command} prisma4-multi-tenant`)
-    await runShell(`${command} file:${p4mtFolder}`)
 
+    if (!(await isPrisma4MultiTenantLocallyInstalled())) {
+      console.log('\n  Installing `prisma4-multi-tenant` as a dependency in your app...')
+      const p4mtFolder = path.join(__dirname, '../../')
+      //await runShell(`${command} prisma4-multi-tenant`)
+      await runShell(`${command} file:${p4mtFolder}`, { cwd: process.cwd() })
+    }
     if (!(await isPrismaCliLocallyInstalled())) {
       console.log('\n  Also installing `prisma` as a dev dependency in your app...')
 
