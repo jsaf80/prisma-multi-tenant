@@ -3,25 +3,29 @@
   "version": "4.7.2",
   "description": "Multi tenancy for Prisma 4.",
   "bin": {
-    "prisma4-multi-tenant": "./dist/cli/index.js",
-    "p4mt": "./dist/cli/index.js"
+    "prisma4-multi-tenant": "./cli/index.js",
+    "p4mt": "./cli/index.js"
   },
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "import": "./index.js",
+      "require": "./index.js"
     },
     "./cli": {
-      "import": "./dist/cli/index.js",
-      "require": "./dist/cli/index.js"
+      "import": "./cli/index.js",
+      "require": "./cli/index.js"
     },
     "./shared": {
-      "import": "./dist/shared/index.js",
-      "require": "./dist/shared/index.js"
+      "import": "./shared/index.js",
+      "require": "./shared/index.js"
+    },
+    "./client": {
+      "import": "./client/index.js",
+      "require": "./client/index.js"
     }
   },
   "type": "module",
-  "files": ["dist/*", "shared/prisma"],
+  "files": ["*"],
   "scripts": {},
   "keywords": ["multi", "tenant", "prisma", "database"],
   "repository": {

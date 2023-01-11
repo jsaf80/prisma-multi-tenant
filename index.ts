@@ -17,6 +17,7 @@ export {
   spawnShell,
   requireDistant,
   isPrismaCliLocallyInstalled,
+  isPrisma4MultiTenantLocallyInstalled,
   getSharedPath,
   Datasource,
 } from './shared/index.js'

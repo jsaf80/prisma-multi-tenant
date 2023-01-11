@@ -20,5 +20,6 @@ export {
   requireDistant,
   isPrismaCliLocallyInstalled,
   getSharedPath,
+  isPrisma4MultiTenantLocallyInstalled,
 } from './shell.js'
 export { Datasource } from './types.js'

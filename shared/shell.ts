@@ -119,8 +119,24 @@ export const getPrismaCliPath = async (): Promise<string> => {
   return path
 }
 
+export const getPrisma4MultiTenantPath = async (): Promise<string> => {
+  //const nodeModules = await getNodeModules()
+  //return path.join(nodeModules, '@prisma/cli/build/index.js')
+  const path = await findUp(process.cwd() + 'node_modules/prisma4-multi-tenant/index.js')
+  if (!path) {
+    throw new Error('Cannot find "prisma"')
+  }
+  return path
+}
+
 export const isPrismaCliLocallyInstalled = async (): Promise<boolean> => {
   return getPrismaCliPath()
+    .then(() => true)
+    .catch(() => false)
+}
+
+export const isPrisma4MultiTenantLocallyInstalled = async (): Promise<boolean> => {
+  return getPrisma4MultiTenantPath()
     .then(() => true)
     .catch(() => false)
 }

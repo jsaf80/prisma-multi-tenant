@@ -26,7 +26,7 @@ class Migrate implements Command {
       name: 'action',
       optional: false,
       description:
-        'Migrate "deploy", "resolve", "status" or "reset" the tenant. For "resolve" and "reset", there are prisma options. Please see Prisma CLI reference.',
+        'Migrate "prepare-deploy" or "prepare", "deploy", "resolve", "status" or "reset" the tenant. Before you\'re able to deploy you have to prepare the migration with "prepare-deploy" on you\'re first/dev tenant wich will call "prisma migrate dev". For "resolve" and "reset", there are prisma options. Please see Prisma CLI reference.',
     },
   ]
   options = [
